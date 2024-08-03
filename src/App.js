@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import data from "./js/data";
 
-function App() {
+export default function App() {
+  return <Desserts />;
+}
+
+function Desserts() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="desserts">
+      <h1 className="desserts__title">Desserts</h1>
+      <div className="desserts__container">
+        {data.map((dessert) => (
+          <Dessert key={dessert.name} dessert={dessert} />
+        ))}
+      </div>
     </div>
   );
 }
 
-export default App;
+function Dessert({ dessert }) {
+  const { thumbnail, mobile, tablet, desktop } = dessert.image;
+  const { name, category, price } = dessert;
+
+  return (
+    <div className="dessert">
+      <picture>
+        <source media="(min-width: 1440px)" srcSet={desktop} />
+        <source media="(min-width: 768px)" srcSet={tablet} />
+        <source srcSet={mobile} />
+        <img className="dessert__img" src={mobile} alt={name} />
+      </picture>
+    </div>
+  );
+}
