@@ -1,1 +1,135 @@
-/*# sourceMappingURL=main.css.map */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  background: #fcf8f6;
+  font-family: "Red Hat Text", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.2rem;
+  padding: 2.4rem;
+}
+
+.desserts {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+.desserts__title {
+  color: #260f08;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 4.8rem;
+}
+.desserts__container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.dessert {
+  display: flex;
+  flex-direction: column;
+  gap: 3.8rem;
+}
+.dessert__image-container {
+  max-width: 32.7rem;
+  position: relative;
+}
+.dessert__img {
+  display: block;
+  width: 100%;
+  border-radius: 0.8rem;
+}
+.dessert__cart-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  width: 16rem;
+  height: 4.4rem;
+  border-radius: 99.9rem;
+  border: 0.1rem solid #ad8a85;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+.dessert__cart-icon {
+  display: block;
+}
+.dessert__cart-text {
+  color: #260f08;
+  font-family: "Red Hat Text", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.dessert__description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.dessert__category {
+  color: #87635a;
+  font-size: 1.4rem;
+}
+.dessert__name {
+  color: #260f08;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+.dessert__price {
+  color: #c73b0f;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 2.4rem;
+  border-radius: 1.2rem;
+  background: #fff;
+  width: 100%;
+  max-width: 32.7rem;
+}
+.cart__quantity {
+  color: #c73b0f;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+.cart__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+.cart__empty-img {
+  display: block;
+}
+.cart__empty-text {
+  color: #87635a;
+  font-size: 1.4rem;
+  font-weight: 600;
+}/*# sourceMappingURL=main.css.map */

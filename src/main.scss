@@ -1,0 +1,193 @@
+// ********* DESIGN SYSTEM *********
+
+// ************ COLORS ************
+$color-red: #c73b0f;
+$color-rose-900: #260f08;
+$color-rose-500: #87635a;
+$color-rose-400: #ad8a85;
+$color-rose-300: #caafa7;
+$color-rose-100: #f5eeec;
+$color-rose-50: #fcf8f6;
+$color-green: #1ea575;
+$color-black: #000;
+$color-white: #fff;
+
+// ********** FONT-FAMILY **********
+$font-red-hat-text: "Red Hat Text", sans-serif;
+
+// ********* FONT-WEIGHTS *********
+$fw-regular: 400;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+
+// ************* SPACING *************
+$spacing-1100: 8.8rem;
+$spacing-500: 4rem;
+$spacing-400: 3.2rem;
+$spacing-300: 2.4rem;
+$spacing-200: 1.6rem;
+$spacing-150: 1.2rem;
+$spacing-100: 0.8rem;
+$spacing-50: 0.4rem;
+
+// ************* BASE *************
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  background: $color-rose-50;
+  font-family: $font-red-hat-text;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+// ********* MOBILE LAYOUTS *********
+
+// ********** 375px LAYOUT **********
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-400;
+  padding: $spacing-300;
+}
+
+// ************ DESSERTS ************
+.desserts {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-400;
+
+  &__title {
+    color: $color-rose-900;
+    font-size: 4rem;
+    font-weight: $fw-bold;
+    line-height: 4.8rem;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-300;
+  }
+}
+
+// ************* DESSERT *************
+.dessert {
+  display: flex;
+  flex-direction: column;
+  gap: 3.8rem;
+
+  &__image-container {
+    max-width: 32.7rem;
+    position: relative;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    border-radius: $spacing-100;
+  }
+
+  &__cart-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-100;
+    width: 16rem;
+    height: 4.4rem;
+    border-radius: 99.9rem;
+    border: 0.1rem solid $color-rose-400;
+    background: $color-white;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+
+  &__cart-icon {
+    display: block;
+  }
+
+  &__cart-text {
+    color: $color-rose-900;
+    font-family: $font-red-hat-text;
+    font-size: 1.4rem;
+    font-weight: $fw-semi-bold;
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-50;
+  }
+
+  &__category {
+    color: $color-rose-500;
+    font-size: 1.4rem;
+  }
+
+  &__name {
+    color: $color-rose-900;
+    font-size: 1.6rem;
+    font-weight: $fw-semi-bold;
+  }
+
+  &__price {
+    color: $color-red;
+    font-size: 1.6rem;
+    font-weight: $fw-semi-bold;
+  }
+}
+
+// ************** CART **************
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-300;
+  padding: $spacing-300;
+  border-radius: 1.2rem;
+  background: $color-white;
+  width: 100%;
+  max-width: 32.7rem;
+
+  &__quantity {
+    color: $color-red;
+    font-size: 2.4rem;
+    font-weight: $fw-bold;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-200;
+  }
+
+  &__empty-img {
+    display: block;
+  }
+
+  &__empty-text {
+    color: $color-rose-500;
+    font-size: 1.4rem;
+    font-weight: $fw-semi-bold;
+  }
+
+  &__filled {
+    // TO DO
+  }
+}

@@ -58,7 +58,7 @@ function Cart() {
   return (
     <div className="cart">
       <span className="cart__quantity">Your Cart (0)</span>
-      <CartEmpty />
+      {/* <CartEmpty /> */}
       <CartFilled />
     </div>
   );
@@ -134,6 +134,15 @@ function Item() {
   );
 }
 
+function OrderTotalTextPrice() {
+  return (
+    <div className="order">
+      <span className="order__total-text">Order total</span>
+      <span className="order__total-price">$46.50</span>
+    </div>
+  );
+}
+
 function CartOrder() {
   return (
     <div className="cart__order">
@@ -145,7 +154,9 @@ function CartOrder() {
         />
         <span className="cart__order-delivery">
           This is a
-          <span className="cart__order-delivery-bold"> carbon-neutral </span>
+          <span className="cart__order-delivery-bold">
+            &nbsp;carbon-neutral&nbsp;
+          </span>
           delivery
         </span>
       </div>
@@ -159,15 +170,6 @@ function OrderBtn({ children }) {
     <button className="btn-order" type="button">
       {children}
     </button>
-  );
-}
-
-function OrderTotalTextPrice() {
-  return (
-    <div className="order">
-      <span className="order__total-text">Order total</span>
-      <span className="order__total-price">$46.50</span>
-    </div>
   );
 }
 
