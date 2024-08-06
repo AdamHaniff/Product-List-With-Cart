@@ -5,6 +5,7 @@ export default function App() {
     <div className="app">
       <Desserts />
       <Cart />
+      {/* <Modal /> */}
     </div>
   );
 }
@@ -81,34 +82,54 @@ function CartEmpty() {
 function CartFilled() {
   return (
     <div className="cart__filled">
-      <div className="cart__items">
-        <Item />
-        <Item />
-        <Item />
-      </div>
+      <Items />
+      <OrderTotalTextPrice />
       <CartOrder />
     </div>
   );
 }
 
+function Items() {
+  return (
+    <div className="items">
+      <Item />
+      <Item />
+      <Item />
+    </div>
+  );
+}
+
 function Item() {
+  const isModal = false;
+
   return (
     <div className="item">
+      {isModal && (
+        <img
+          className="item__thumbnail"
+          src="images/image-tiramisu-thumbnail.jpg"
+          alt="Item thumbnail"
+        />
+      )}
       <div className="item__details">
         <span className="item__name">Classic Tiramisu</span>
         <div className="item__pricing">
           <span className="item__quantity">1x</span>
           <span className="item__price">@ $5.50</span>
-          <span className="item__total-price">$5.50</span>
+          {!isModal && <span className="item__total-price">$5.50</span>}
         </div>
       </div>
-      <button className="item__remove-btn">
-        <img
-          className="item__remove-icon"
-          src="images/icon-remove-item.svg"
-          alt="Remove icon"
-        />
-      </button>
+      {isModal ? (
+        <span className="item__total-price">$5.50</span>
+      ) : (
+        <button className="item__remove-btn">
+          <img
+            className="item__remove-icon"
+            src="images/icon-remove-item.svg"
+            alt="Remove icon"
+          />
+        </button>
+      )}
     </div>
   );
 }
@@ -116,10 +137,6 @@ function Item() {
 function CartOrder() {
   return (
     <div className="cart__order">
-      <div className="cart__order-text-price">
-        <span className="cart__order-total-text">Order Total</span>
-        <span className="cart__order-total-price">$46.50</span>
-      </div>
       <div className="cart__order-icon-delivery">
         <img
           className="cart__order-icon"
@@ -132,7 +149,47 @@ function CartOrder() {
           delivery
         </span>
       </div>
-      <button className="cart__order-btn">Confirm Order</button>
+      <OrderBtn>Confirm Order</OrderBtn>
+    </div>
+  );
+}
+
+function OrderBtn({ children }) {
+  return (
+    <button className="btn-order" type="button">
+      {children}
+    </button>
+  );
+}
+
+function OrderTotalTextPrice() {
+  return (
+    <div className="order">
+      <span className="order__total-text">Order total</span>
+      <span className="order__total-price">$46.50</span>
+    </div>
+  );
+}
+
+function Modal() {
+  return (
+    <div className="modal">
+      <div className="modal__icon-text">
+        <img
+          className="modal__confirmed-icon"
+          src="images/icon-order-confirmed.svg"
+          alt="Order confirmed icon with a green checkmark inside a green circle"
+        />
+        <div className="modal__text">
+          <span className="modal__text-confirmed">Order Confirmed</span>
+          <span className="modal__text-enjoy">
+            We hope you enjoy your food!
+          </span>
+        </div>
+      </div>
+      <Items />
+      <OrderTotalTextPrice />
+      <OrderBtn>Start New Order</OrderBtn>
     </div>
   );
 }
