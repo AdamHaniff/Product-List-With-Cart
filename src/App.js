@@ -5,7 +5,7 @@ export default function App() {
     <div className="app">
       <Desserts />
       <Cart />
-      <Modal />
+      {/* <Modal /> */}
     </div>
   );
 }
@@ -58,8 +58,8 @@ function Cart() {
   return (
     <div className="cart">
       <span className="cart__quantity">Your Cart (0)</span>
-      {/* <CartEmpty /> */}
-      <CartFilled />
+      <CartEmpty />
+      {/* <CartFilled /> */}
     </div>
   );
 }
@@ -100,7 +100,7 @@ function Items() {
 }
 
 function Item() {
-  const isModal = true;
+  const isModal = false;
 
   return (
     <li className="item">

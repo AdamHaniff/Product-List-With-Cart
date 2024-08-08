@@ -183,6 +183,7 @@ body {
   width: 4.8rem;
   height: 4.8rem;
   border-radius: 0.4rem;
+  margin-right: 1.6rem;
 }
 .item__details {
   display: flex;
@@ -288,4 +289,15 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
+}
+.modal__items-order .items .item {
+  justify-content: initial;
+}
+.modal__items-order .items .item .item__details .item__pricing {
+  gap: 1.6rem;
+}
+.modal__items-order .items .item .item__total-price {
+  margin-left: auto;
+  color: #260f08;
+  font-size: 1.6rem;
 }/*# sourceMappingURL=main.css.map */

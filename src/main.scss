@@ -246,6 +246,7 @@ body {
     width: 4.8rem;
     height: 4.8rem;
     border-radius: 0.4rem;
+    margin-right: $spacing-200;
   }
 
   &__details {
@@ -370,5 +371,19 @@ body {
     display: flex;
     flex-direction: column;
     gap: $spacing-300;
+
+    & .items .item {
+      justify-content: initial;
+
+      & .item__details .item__pricing {
+        gap: $spacing-200;
+      }
+
+      & .item__total-price {
+        margin-left: auto;
+        color: $color-rose-900;
+        font-size: 1.6rem;
+      }
+    }
   }
 }
