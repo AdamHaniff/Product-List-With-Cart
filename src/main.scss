@@ -100,6 +100,7 @@ body {
     display: block;
     width: 100%;
     border-radius: $spacing-100;
+    border: 0.2rem solid transparent;
   }
 
   &__cart-btn {
@@ -188,6 +189,186 @@ body {
   }
 
   &__filled {
-    // TO DO
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-300;
+  }
+
+  &__order {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-300;
+  }
+
+  &__order-icon-delivery {
+    background: $color-rose-50;
+    border-radius: 0.8rem;
+    padding: $spacing-200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-100;
+  }
+
+  &__order-icon {
+    display: block;
+  }
+
+  &__order-delivery {
+    color: $color-rose-900;
+    font-size: 1.4rem;
+
+    &-semi-bold {
+      font-weight: $fw-semi-bold;
+    }
+  }
+}
+
+// ************** ITEMS **************
+.items {
+  list-style: none;
+
+  & .item:not(:first-child) {
+    padding-top: $spacing-200;
+  }
+}
+
+// *************** ITEM ***************
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: $spacing-200;
+  border-bottom: 0.1rem solid $color-rose-100;
+
+  &__thumbnail {
+    display: block;
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 0.4rem;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-100;
+  }
+
+  &__name {
+    color: $color-rose-900;
+    font-size: 1.4rem;
+    font-weight: $fw-semi-bold;
+  }
+
+  &__pricing {
+    display: flex;
+    gap: $spacing-100;
+    align-items: center;
+  }
+
+  &__quantity {
+    color: $color-red;
+    font-size: 1.4rem;
+    font-weight: $fw-semi-bold;
+  }
+
+  &__price {
+    color: $color-rose-500;
+    font-size: 1.4rem;
+  }
+
+  &__total-price {
+    color: $color-rose-500;
+    font-size: 1.4rem;
+    font-weight: $fw-semi-bold;
+  }
+
+  &__remove-btn {
+    border: none;
+    background: none;
+  }
+
+  &__remove-icon {
+    display: block;
+  }
+}
+
+// ************** ORDER **************
+.order {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__total-text {
+    color: $color-rose-900;
+    font-size: 1.4rem;
+  }
+
+  &__total-price {
+    color: $color-rose-900;
+    font-size: 2.4rem;
+    font-weight: $fw-bold;
+  }
+}
+
+// ************* OrderBtn *************
+.btn-order {
+  height: 5.3rem;
+  border: none;
+  border-radius: 99.9rem;
+  background: $color-red;
+  color: $color-white;
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: $fw-semi-bold;
+}
+
+// ************** MODAL **************
+.modal {
+  border-radius: 1.2rem 1.2rem 0 0;
+  background: $color-white;
+  padding: $spacing-500 $spacing-300 $spacing-300;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-400;
+  position: absolute;
+  width: 100%;
+
+  &__icon-text {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: $spacing-300;
+  }
+
+  &__confirmed-icon {
+    display: block;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-100;
+  }
+
+  &__text-confirmed {
+    color: $color-rose-900;
+    font-size: 4rem;
+    font-weight: $fw-bold;
+    line-height: 4.8rem;
+  }
+
+  &__text-enjoy {
+    color: $color-rose-500;
+    font-size: 1.6rem;
+  }
+
+  &__items-order {
+    padding: $spacing-300;
+    border-radius: 0.8rem;
+    background: $color-rose-50;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-300;
   }
 }

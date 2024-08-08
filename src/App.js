@@ -5,7 +5,7 @@ export default function App() {
     <div className="app">
       <Desserts />
       <Cart />
-      {/* <Modal /> */}
+      <Modal />
     </div>
   );
 }
@@ -14,11 +14,11 @@ function Desserts() {
   return (
     <div className="desserts">
       <h1 className="desserts__title">Desserts</h1>
-      <div className="desserts__container">
+      <ul className="desserts__container">
         {data.map((dessert) => (
           <Dessert key={dessert.name} dessert={dessert} />
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
@@ -28,7 +28,7 @@ function Dessert({ dessert }) {
   const { name, category, price } = dessert;
 
   return (
-    <div className="dessert">
+    <li className="dessert">
       <div className="dessert__image-container">
         <picture>
           <source media="(min-width: 1440px)" srcSet={desktop} />
@@ -50,7 +50,7 @@ function Dessert({ dessert }) {
         <span className="dessert__name">{name}</span>
         <span className="dessert__price">${price.toFixed(2)}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
@@ -91,19 +91,19 @@ function CartFilled() {
 
 function Items() {
   return (
-    <div className="items">
+    <ul className="items">
       <Item />
       <Item />
       <Item />
-    </div>
+    </ul>
   );
 }
 
 function Item() {
-  const isModal = false;
+  const isModal = true;
 
   return (
-    <div className="item">
+    <li className="item">
       {isModal && (
         <img
           className="item__thumbnail"
@@ -123,21 +123,33 @@ function Item() {
         <span className="item__total-price">$5.50</span>
       ) : (
         <button className="item__remove-btn">
-          <img
+          <svg
             className="item__remove-icon"
-            src="images/icon-remove-item.svg"
-            alt="Remove icon"
-          />
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M10 1.25C5.125 1.25 1.25 5.125 1.25 10C1.25 14.875 5.125 18.75 10 18.75C14.875 18.75 18.75 14.875 18.75 10C18.75 5.125 14.875 1.25 10 1.25ZM10 17.5C5.875 17.5 2.5 14.125 2.5 10C2.5 5.875 5.875 2.5 10 2.5C14.125 2.5 17.5 5.875 17.5 10C17.5 14.125 14.125 17.5 10 17.5Z"
+              fill="#AD8A85"
+            />
+            <path
+              d="M13.375 14.375L10 11L6.625 14.375L5.625 13.375L9 10L5.625 6.625L6.625 5.625L10 9L13.375 5.625L14.375 6.625L11 10L14.375 13.375L13.375 14.375Z"
+              fill="#AD8A85"
+            />
+          </svg>
         </button>
       )}
-    </div>
+    </li>
   );
 }
 
 function OrderTotalTextPrice() {
   return (
     <div className="order">
-      <span className="order__total-text">Order total</span>
+      <span className="order__total-text">Order Total</span>
       <span className="order__total-price">$46.50</span>
     </div>
   );
@@ -154,7 +166,7 @@ function CartOrder() {
         />
         <span className="cart__order-delivery">
           This is a
-          <span className="cart__order-delivery-bold">
+          <span className="cart__order-delivery-semi-bold">
             &nbsp;carbon-neutral&nbsp;
           </span>
           delivery
@@ -189,8 +201,10 @@ function Modal() {
           </span>
         </div>
       </div>
-      <Items />
-      <OrderTotalTextPrice />
+      <div className="modal__items-order">
+        <Items />
+        <OrderTotalTextPrice />
+      </div>
       <OrderBtn>Start New Order</OrderBtn>
     </div>
   );
