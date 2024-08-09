@@ -1,29 +1,64 @@
+import { useState } from "react";
 import data from "./js/data";
 
 export default function App() {
+  // STATE
+  const [cartItems, setCartItems] = useState([]);
+
+  // HANDLER FUNCTIONS
+  function handleAddToCart(dessert) {
+    setCartItems((cartItems) => [...cartItems, dessert]);
+  }
+
+  function handleRemoveFromCart(id) {
+    setCartItems((cartItems) =>
+      cartItems.filter((dessert) => dessert.id !== id)
+    );
+  }
+
   return (
     <div className="app">
-      <Desserts />
-      <Cart />
+      <Desserts onHandleAddToCart={handleAddToCart} />
+      <Cart
+        cartItems={cartItems}
+        onHandleRemoveFromCart={handleRemoveFromCart}
+      />
       {/* <Modal /> */}
     </div>
   );
 }
 
-function Desserts() {
+function Desserts({ onHandleAddToCart }) {
   return (
     <div className="desserts">
       <h1 className="desserts__title">Desserts</h1>
       <ul className="desserts__container">
         {data.map((dessert) => (
-          <Dessert key={dessert.name} dessert={dessert} />
+          <Dessert
+            key={dessert.id}
+            dessert={dessert}
+            onHandleAddToCart={onHandleAddToCart}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Dessert({ dessert }) {
+function Dessert({ dessert, onHandleAddToCart }) {
+  // STATE
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+
+  // HANDLER FUNCTIONS
+  function handleAddToCartClick() {
+    // Add the dessert to the 'cartItems' array
+    onHandleAddToCart(dessert);
+
+    // Update 'isAddedToCart'
+    setIsAddedToCart(true);
+  }
+
+  // VARIABLES
   const { mobile, tablet, desktop } = dessert.image;
   const { name, category, price } = dessert;
 
@@ -34,9 +69,19 @@ function Dessert({ dessert }) {
           <source media="(min-width: 1440px)" srcSet={desktop} />
           <source media="(min-width: 768px)" srcSet={tablet} />
           <source srcSet={mobile} />
-          <img className="dessert__img" src={mobile} alt={name} />
+          <img
+            className={`dessert__img ${
+              isAddedToCart ? "dessert__img--added" : ""
+            }`}
+            src={mobile}
+            alt={name}
+          />
         </picture>
-        <button className="dessert__cart-btn" type="button">
+        <button
+          className="dessert__cart-btn"
+          type="button"
+          onClick={handleAddToCartClick}
+        >
           <img
             className="dessert__cart-icon"
             src="images/icon-add-to-cart.svg"
@@ -54,12 +99,20 @@ function Dessert({ dessert }) {
   );
 }
 
-function Cart() {
+function Cart({ cartItems, onHandleRemoveFromCart }) {
+  const isCartEmpty = cartItems.length === 0;
+
   return (
     <div className="cart">
-      <span className="cart__quantity">Your Cart (0)</span>
-      <CartEmpty />
-      {/* <CartFilled /> */}
+      <span className="cart__quantity">Your Cart ({cartItems.length})</span>
+      {isCartEmpty ? (
+        <CartEmpty />
+      ) : (
+        <CartFilled
+          cartItems={cartItems}
+          onHandleRemoveFromCart={onHandleRemoveFromCart}
+        />
+      )}
     </div>
   );
 }
@@ -79,27 +132,34 @@ function CartEmpty() {
   );
 }
 
-function CartFilled() {
+function CartFilled({ cartItems, onHandleRemoveFromCart }) {
   return (
     <div className="cart__filled">
-      <Items />
+      <Items
+        cartItems={cartItems}
+        onHandleRemoveFromCart={onHandleRemoveFromCart}
+      />
       <OrderTotalTextPrice />
       <CartOrder />
     </div>
   );
 }
 
-function Items() {
+function Items({ cartItems, onHandleRemoveFromCart }) {
   return (
     <ul className="items">
-      <Item />
-      <Item />
-      <Item />
+      {cartItems.map((dessert) => (
+        <Item
+          key={dessert.id}
+          dessert={dessert}
+          onHandleRemoveFromCart={onHandleRemoveFromCart}
+        />
+      ))}
     </ul>
   );
 }
 
-function Item() {
+function Item({ dessert, onHandleRemoveFromCart }) {
   const isModal = false;
 
   return (
@@ -112,17 +172,20 @@ function Item() {
         />
       )}
       <div className="item__details">
-        <span className="item__name">Classic Tiramisu</span>
+        <span className="item__name">{dessert.name}</span>
         <div className="item__pricing">
           <span className="item__quantity">1x</span>
-          <span className="item__price">@ $5.50</span>
+          <span className="item__price">@ {dessert.price.toFixed(2)}</span>
           {!isModal && <span className="item__total-price">$5.50</span>}
         </div>
       </div>
       {isModal ? (
         <span className="item__total-price">$5.50</span>
       ) : (
-        <button className="item__remove-btn">
+        <button
+          className="item__remove-btn"
+          onClick={() => onHandleRemoveFromCart(dessert.id)}
+        >
           <svg
             className="item__remove-icon"
             xmlns="http://www.w3.org/2000/svg"

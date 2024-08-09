@@ -60,6 +60,7 @@ body {
   width: 100%;
   border-radius: 0.8rem;
   border: 0.2rem solid transparent;
+  transition: border-color 0.3s ease-in-out;
 }
 .dessert__cart-btn {
   display: flex;
@@ -300,4 +301,8 @@ body {
   margin-left: auto;
   color: #260f08;
   font-size: 1.6rem;
+}
+
+.dessert__img--added {
+  border-color: #c73b0f;
 }/*# sourceMappingURL=main.css.map */
