@@ -30,6 +30,17 @@ $spacing-150: 1.2rem;
 $spacing-100: 0.8rem;
 $spacing-50: 0.4rem;
 
+// ************** MIXINS **************
+@mixin dessert-btn-styles($bg-color) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 99.9rem;
+  padding: $spacing-150;
+  background: $bg-color;
+}
+
 // ************* BASE *************
 *,
 *::before,
@@ -104,20 +115,20 @@ body {
     transition: border-color 0.3s ease-in-out;
   }
 
-  &__cart-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: $spacing-100;
+  &__btn-container {
     width: 16rem;
     height: 4.4rem;
-    border-radius: 99.9rem;
-    border: 0.1rem solid $color-rose-400;
-    background: $color-white;
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 50%);
+  }
+
+  &__cart-btn {
+    justify-content: center;
+    gap: $spacing-100;
+    border: 0.1rem solid $color-rose-400;
+    @include dessert-btn-styles($color-white);
   }
 
   &__cart-icon {
@@ -127,6 +138,28 @@ body {
   &__cart-text {
     color: $color-rose-900;
     font-family: $font-red-hat-text;
+    font-size: 1.4rem;
+    font-weight: $fw-semi-bold;
+  }
+
+  &__quantity {
+    justify-content: space-between;
+    @include dessert-btn-styles($color-red);
+  }
+
+  &__decrement-btn,
+  &__increment-btn {
+    background: none;
+    border: none;
+  }
+
+  &__decrement-icon,
+  &__increment-icon {
+    display: block;
+  }
+
+  &__quantity-value {
+    color: $color-white;
     font-size: 1.4rem;
     font-weight: $fw-semi-bold;
   }
@@ -390,6 +423,10 @@ body {
 }
 
 // ********** DYNAMIC STYLES **********
-.dessert__img--added {
-  border-color: $color-red;
+
+// ************* DESSERT *************
+.dessert {
+  &__img--added {
+    border-color: $color-red;
+  }
 }

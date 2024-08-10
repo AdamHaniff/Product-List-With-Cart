@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Desserts onHandleAddToCart={handleAddToCart} />
+      <Desserts onHandleAddToCart={handleAddToCart} cartItems={cartItems} />
       <Cart
         cartItems={cartItems}
         onHandleRemoveFromCart={handleRemoveFromCart}
@@ -28,7 +28,7 @@ export default function App() {
   );
 }
 
-function Desserts({ onHandleAddToCart }) {
+function Desserts({ onHandleAddToCart, cartItems }) {
   return (
     <div className="desserts">
       <h1 className="desserts__title">Desserts</h1>
@@ -38,6 +38,7 @@ function Desserts({ onHandleAddToCart }) {
             key={dessert.id}
             dessert={dessert}
             onHandleAddToCart={onHandleAddToCart}
+            cartItems={cartItems}
           />
         ))}
       </ul>
@@ -45,22 +46,11 @@ function Desserts({ onHandleAddToCart }) {
   );
 }
 
-function Dessert({ dessert, onHandleAddToCart }) {
-  // STATE
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-
-  // HANDLER FUNCTIONS
-  function handleAddToCartClick() {
-    // Add the dessert to the 'cartItems' array
-    onHandleAddToCart(dessert);
-
-    // Update 'isAddedToCart'
-    setIsAddedToCart(true);
-  }
-
+function Dessert({ dessert, onHandleAddToCart, cartItems }) {
   // VARIABLES
   const { mobile, tablet, desktop } = dessert.image;
   const { name, category, price } = dessert;
+  const isAddedToCart = cartItems.map((item) => item.id).includes(dessert.id);
 
   return (
     <li className="dessert">
@@ -77,18 +67,72 @@ function Dessert({ dessert, onHandleAddToCart }) {
             alt={name}
           />
         </picture>
-        <button
-          className="dessert__cart-btn"
-          type="button"
-          onClick={handleAddToCartClick}
-        >
-          <img
-            className="dessert__cart-icon"
-            src="images/icon-add-to-cart.svg"
-            alt="Cart icon"
-          />
-          <span className="dessert__cart-text">Add to Cart</span>
-        </button>
+        <div className="dessert__btn-container">
+          {!isAddedToCart ? (
+            <button
+              className="dessert__cart-btn"
+              type="button"
+              onClick={() => onHandleAddToCart(dessert)}
+            >
+              <img
+                className="dessert__cart-icon"
+                src="images/icon-add-to-cart.svg"
+                alt="Cart icon"
+              />
+              <span className="dessert__cart-text">Add to Cart</span>
+            </button>
+          ) : (
+            <div className="dessert__quantity">
+              <button className="dessert__decrement-btn" type="button">
+                <svg
+                  className="dessert__decrement-icon"
+                  width="21"
+                  height="20"
+                  viewBox="0 0 21 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="Add to Cart - Subtract Icon">
+                    <path
+                      id="Vector"
+                      d="M10.5 2.5C14.625 2.5 18 5.875 18 10C18 14.125 14.625 17.5 10.5 17.5C6.375 17.5 3 14.125 3 10C3 5.875 6.375 2.5 10.5 2.5ZM10.5 1.25C5.6875 1.25 1.75 5.1875 1.75 10C1.75 14.8125 5.6875 18.75 10.5 18.75C15.3125 18.75 19.25 14.8125 19.25 10C19.25 5.1875 15.3125 1.25 10.5 1.25Z"
+                      fill="white"
+                    />
+                    <path
+                      id="Vector_2"
+                      d="M5.5 9.375H15.5V10.625H5.5V9.375Z"
+                      fill="white"
+                    />
+                  </g>
+                </svg>
+              </button>
+              <span className="dessert__quantity-value">1</span>
+              <button className="dessert__increment-btn" type="button">
+                <svg
+                  className="dessert__increment-icon"
+                  width="21"
+                  height="20"
+                  viewBox="0 0 21 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="Add to Cart - Add Icon">
+                    <path
+                      id="Vector"
+                      d="M10.5 2.5C14.625 2.5 18 5.875 18 10C18 14.125 14.625 17.5 10.5 17.5C6.375 17.5 3 14.125 3 10C3 5.875 6.375 2.5 10.5 2.5ZM10.5 1.25C5.6875 1.25 1.75 5.1875 1.75 10C1.75 14.8125 5.6875 18.75 10.5 18.75C15.3125 18.75 19.25 14.8125 19.25 10C19.25 5.1875 15.3125 1.25 10.5 1.25Z"
+                      fill="white"
+                    />
+                    <path
+                      id="Vector_2"
+                      d="M15.5 9.375H11.125V5H9.875V9.375H5.5V10.625H9.875V15H11.125V10.625H15.5V9.375Z"
+                      fill="white"
+                    />
+                  </g>
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
       <div className="dessert__description">
         <span className="dessert__category">{category}</span>
