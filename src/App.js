@@ -6,8 +6,8 @@ export default function App() {
   const [cartItems, setCartItems] = useState([]);
 
   // HANDLER FUNCTIONS
-  function handleAddToCart(dessert) {
-    setCartItems((cartItems) => [...cartItems, dessert]);
+  function handleAddToCart(dessert, quantity) {
+    setCartItems((cartItems) => [...cartItems, { ...dessert, quantity }]);
   }
 
   function handleRemoveFromCart(id) {
@@ -47,6 +47,15 @@ function Desserts({ onHandleAddToCart, cartItems }) {
 }
 
 function Dessert({ dessert, onHandleAddToCart, cartItems }) {
+  // STATE
+  const [quantity, setQuantity] = useState(1);
+
+  // HANDLER FUNCTIONS
+  const handleDecrement = () =>
+    setQuantity((quantity) => Math.max(1, quantity - 1));
+
+  const handleIncrement = () => setQuantity((quantity) => quantity + 1);
+
   // VARIABLES
   const { mobile, tablet, desktop } = dessert.image;
   const { name, category, price } = dessert;
@@ -72,7 +81,7 @@ function Dessert({ dessert, onHandleAddToCart, cartItems }) {
             <button
               className="dessert__cart-btn"
               type="button"
-              onClick={() => onHandleAddToCart(dessert)}
+              onClick={() => onHandleAddToCart(dessert, quantity)}
             >
               <img
                 className="dessert__cart-icon"
@@ -82,8 +91,12 @@ function Dessert({ dessert, onHandleAddToCart, cartItems }) {
               <span className="dessert__cart-text">Add to Cart</span>
             </button>
           ) : (
-            <div className="dessert__quantity">
-              <button className="dessert__decrement-btn" type="button">
+            <div className="dessert__quantity dessert__quantity--fade-in">
+              <button
+                className="dessert__decrement-btn"
+                type="button"
+                onClick={handleDecrement}
+              >
                 <svg
                   className="dessert__decrement-icon"
                   width="21"
@@ -106,8 +119,12 @@ function Dessert({ dessert, onHandleAddToCart, cartItems }) {
                   </g>
                 </svg>
               </button>
-              <span className="dessert__quantity-value">1</span>
-              <button className="dessert__increment-btn" type="button">
+              <span className="dessert__quantity-value">{quantity}</span>
+              <button
+                className="dessert__increment-btn"
+                type="button"
+                onClick={handleIncrement}
+              >
                 <svg
                   className="dessert__increment-icon"
                   width="21"
