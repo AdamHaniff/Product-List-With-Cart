@@ -10,6 +10,14 @@ export default function App() {
     setCartItems((cartItems) => [...cartItems, { ...dessert, quantity }]);
   }
 
+  function handleQuantityUpdate(id, newQuantity) {
+    setCartItems((cartItems) => {
+      return cartItems.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      );
+    });
+  }
+
   function handleRemoveFromCart(id) {
     setCartItems((cartItems) =>
       cartItems.filter((dessert) => dessert.id !== id)
@@ -18,7 +26,11 @@ export default function App() {
 
   return (
     <div className="app">
-      <Desserts onHandleAddToCart={handleAddToCart} cartItems={cartItems} />
+      <Desserts
+        onHandleAddToCart={handleAddToCart}
+        cartItems={cartItems}
+        onQuantityUpdate={handleQuantityUpdate}
+      />
       <Cart
         cartItems={cartItems}
         onHandleRemoveFromCart={handleRemoveFromCart}
@@ -28,7 +40,7 @@ export default function App() {
   );
 }
 
-function Desserts({ onHandleAddToCart, cartItems }) {
+function Desserts({ onHandleAddToCart, cartItems, onQuantityUpdate }) {
   return (
     <div className="desserts">
       <h1 className="desserts__title">Desserts</h1>
@@ -39,6 +51,7 @@ function Desserts({ onHandleAddToCart, cartItems }) {
             dessert={dessert}
             onHandleAddToCart={onHandleAddToCart}
             cartItems={cartItems}
+            onQuantityUpdate={onQuantityUpdate}
           />
         ))}
       </ul>
@@ -46,20 +59,24 @@ function Desserts({ onHandleAddToCart, cartItems }) {
   );
 }
 
-function Dessert({ dessert, onHandleAddToCart, cartItems }) {
+function Dessert({ dessert, onHandleAddToCart, cartItems, onQuantityUpdate }) {
   // STATE
   const [quantity, setQuantity] = useState(1);
-
-  // HANDLER FUNCTIONS
-  const handleDecrement = () =>
-    setQuantity((quantity) => Math.max(1, quantity - 1));
-
-  const handleIncrement = () => setQuantity((quantity) => quantity + 1);
 
   // VARIABLES
   const { mobile, tablet, desktop } = dessert.image;
   const { name, category, price } = dessert;
   const isAddedToCart = cartItems.map((item) => item.id).includes(dessert.id);
+
+  // HANDLER FUNCTIONS
+  function handleQuantityChange(amount) {
+    const newQuantity = quantity + amount;
+
+    if (newQuantity > 0) {
+      setQuantity(newQuantity);
+      onQuantityUpdate(dessert.id, newQuantity);
+    }
+  }
 
   return (
     <li className="dessert">
@@ -95,7 +112,7 @@ function Dessert({ dessert, onHandleAddToCart, cartItems }) {
               <button
                 className="dessert__decrement-btn"
                 type="button"
-                onClick={handleDecrement}
+                onClick={() => handleQuantityChange(-1)}
               >
                 <svg
                   className="dessert__decrement-icon"
@@ -123,7 +140,7 @@ function Dessert({ dessert, onHandleAddToCart, cartItems }) {
               <button
                 className="dessert__increment-btn"
                 type="button"
-                onClick={handleIncrement}
+                onClick={() => handleQuantityChange(1)}
               >
                 <svg
                   className="dessert__increment-icon"
@@ -200,7 +217,7 @@ function CartFilled({ cartItems, onHandleRemoveFromCart }) {
         cartItems={cartItems}
         onHandleRemoveFromCart={onHandleRemoveFromCart}
       />
-      <OrderTotalTextPrice />
+      <OrderTotalTextPrice cartItems={cartItems} />
       <CartOrder />
     </div>
   );
@@ -222,6 +239,7 @@ function Items({ cartItems, onHandleRemoveFromCart }) {
 
 function Item({ dessert, onHandleRemoveFromCart }) {
   const isModal = false;
+  const itemTotalPrice = (dessert.price * dessert.quantity).toFixed(2);
 
   return (
     <li className="item">
@@ -235,9 +253,11 @@ function Item({ dessert, onHandleRemoveFromCart }) {
       <div className="item__details">
         <span className="item__name">{dessert.name}</span>
         <div className="item__pricing">
-          <span className="item__quantity">1x</span>
+          <span className="item__quantity">{dessert.quantity}x</span>
           <span className="item__price">@ {dessert.price.toFixed(2)}</span>
-          {!isModal && <span className="item__total-price">$5.50</span>}
+          {!isModal && (
+            <span className="item__total-price">${itemTotalPrice}</span>
+          )}
         </div>
       </div>
       {isModal ? (
@@ -270,11 +290,15 @@ function Item({ dessert, onHandleRemoveFromCart }) {
   );
 }
 
-function OrderTotalTextPrice() {
+function OrderTotalTextPrice({ cartItems }) {
+  const orderTotalPrice = cartItems
+    .reduce((sum, item) => sum + item.price * item.quantity, 0)
+    .toFixed(2);
+
   return (
     <div className="order">
       <span className="order__total-text">Order Total</span>
-      <span className="order__total-price">$46.50</span>
+      <span className="order__total-price">${orderTotalPrice}</span>
     </div>
   );
 }
