@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import data from "./js/data";
 
 export default function App() {
   // STATE
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(function () {
+    const storedValue = localStorage.getItem("cartItems");
+    return JSON.parse(storedValue);
+  });
 
   // HANDLER FUNCTIONS
-  function handleAddToCart(dessert, quantity) {
-    setCartItems((cartItems) => [...cartItems, { ...dessert, quantity }]);
+  function handleAddToCart(dessert) {
+    setCartItems((cartItems) => [...cartItems, { ...dessert, quantity: 1 }]);
   }
 
   function handleQuantityUpdate(id, newQuantity) {
@@ -23,6 +26,14 @@ export default function App() {
       cartItems.filter((dessert) => dessert.id !== id)
     );
   }
+
+  // SET UP LOCAL STORAGE
+  useEffect(
+    function () {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    },
+    [cartItems]
+  );
 
   return (
     <div className="app">
@@ -60,23 +71,10 @@ function Desserts({ onHandleAddToCart, cartItems, onQuantityUpdate }) {
 }
 
 function Dessert({ dessert, onHandleAddToCart, cartItems, onQuantityUpdate }) {
-  // STATE
-  const [quantity, setQuantity] = useState(1);
-
   // VARIABLES
   const { mobile, tablet, desktop } = dessert.image;
   const { name, category, price } = dessert;
   const isAddedToCart = cartItems.map((item) => item.id).includes(dessert.id);
-
-  // HANDLER FUNCTIONS
-  function handleQuantityChange(amount) {
-    const newQuantity = quantity + amount;
-
-    if (newQuantity > 0) {
-      setQuantity(newQuantity);
-      onQuantityUpdate(dessert.id, newQuantity);
-    }
-  }
 
   return (
     <li className="dessert">
@@ -95,76 +93,16 @@ function Dessert({ dessert, onHandleAddToCart, cartItems, onQuantityUpdate }) {
         </picture>
         <div className="dessert__btn-container">
           {!isAddedToCart ? (
-            <button
-              className="dessert__cart-btn"
-              type="button"
-              onClick={() => onHandleAddToCart(dessert, quantity)}
-            >
-              <img
-                className="dessert__cart-icon"
-                src="images/icon-add-to-cart.svg"
-                alt="Cart icon"
-              />
-              <span className="dessert__cart-text">Add to Cart</span>
-            </button>
+            <AddToCart
+              dessert={dessert}
+              onHandleAddToCart={onHandleAddToCart}
+            />
           ) : (
-            <div className="dessert__quantity dessert__quantity--fade-in">
-              <button
-                className="dessert__decrement-btn"
-                type="button"
-                onClick={() => handleQuantityChange(-1)}
-              >
-                <svg
-                  className="dessert__decrement-icon"
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="Add to Cart - Subtract Icon">
-                    <path
-                      id="Vector"
-                      d="M10.5 2.5C14.625 2.5 18 5.875 18 10C18 14.125 14.625 17.5 10.5 17.5C6.375 17.5 3 14.125 3 10C3 5.875 6.375 2.5 10.5 2.5ZM10.5 1.25C5.6875 1.25 1.75 5.1875 1.75 10C1.75 14.8125 5.6875 18.75 10.5 18.75C15.3125 18.75 19.25 14.8125 19.25 10C19.25 5.1875 15.3125 1.25 10.5 1.25Z"
-                      fill="white"
-                    />
-                    <path
-                      id="Vector_2"
-                      d="M5.5 9.375H15.5V10.625H5.5V9.375Z"
-                      fill="white"
-                    />
-                  </g>
-                </svg>
-              </button>
-              <span className="dessert__quantity-value">{quantity}</span>
-              <button
-                className="dessert__increment-btn"
-                type="button"
-                onClick={() => handleQuantityChange(1)}
-              >
-                <svg
-                  className="dessert__increment-icon"
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="Add to Cart - Add Icon">
-                    <path
-                      id="Vector"
-                      d="M10.5 2.5C14.625 2.5 18 5.875 18 10C18 14.125 14.625 17.5 10.5 17.5C6.375 17.5 3 14.125 3 10C3 5.875 6.375 2.5 10.5 2.5ZM10.5 1.25C5.6875 1.25 1.75 5.1875 1.75 10C1.75 14.8125 5.6875 18.75 10.5 18.75C15.3125 18.75 19.25 14.8125 19.25 10C19.25 5.1875 15.3125 1.25 10.5 1.25Z"
-                      fill="white"
-                    />
-                    <path
-                      id="Vector_2"
-                      d="M15.5 9.375H11.125V5H9.875V9.375H5.5V10.625H9.875V15H11.125V10.625H15.5V9.375Z"
-                      fill="white"
-                    />
-                  </g>
-                </svg>
-              </button>
-            </div>
+            <Quantity
+              dessert={dessert}
+              onQuantityUpdate={onQuantityUpdate}
+              cartItems={cartItems}
+            />
           )}
         </div>
       </div>
@@ -177,12 +115,107 @@ function Dessert({ dessert, onHandleAddToCart, cartItems, onQuantityUpdate }) {
   );
 }
 
+function AddToCart({ dessert, onHandleAddToCart }) {
+  return (
+    <button
+      className="dessert__cart-btn"
+      type="button"
+      onClick={() => onHandleAddToCart(dessert)}
+    >
+      <img
+        className="dessert__cart-icon"
+        src="images/icon-add-to-cart.svg"
+        alt="Cart icon"
+      />
+      <span className="dessert__cart-text">Add to Cart</span>
+    </button>
+  );
+}
+
+function Quantity({ dessert, onQuantityUpdate, cartItems }) {
+  // STATE
+  const [quantity, setQuantity] = useState(
+    cartItems.find((item) => item.id === dessert.id).quantity
+  );
+
+  // HANDLER FUNCTIONS
+  function handleQuantityChange(amount) {
+    const newQuantity = quantity + amount;
+
+    if (newQuantity > 0) {
+      setQuantity((qty) => qty + amount);
+      onQuantityUpdate(dessert.id, newQuantity);
+    }
+  }
+
+  return (
+    <div className="dessert__quantity dessert__quantity--fade-in">
+      <button
+        className="dessert__decrement-btn"
+        type="button"
+        onClick={() => handleQuantityChange(-1)}
+      >
+        <svg
+          className="dessert__decrement-icon"
+          width="21"
+          height="20"
+          viewBox="0 0 21 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="Add to Cart - Subtract Icon">
+            <path
+              id="Vector"
+              d="M10.5 2.5C14.625 2.5 18 5.875 18 10C18 14.125 14.625 17.5 10.5 17.5C6.375 17.5 3 14.125 3 10C3 5.875 6.375 2.5 10.5 2.5ZM10.5 1.25C5.6875 1.25 1.75 5.1875 1.75 10C1.75 14.8125 5.6875 18.75 10.5 18.75C15.3125 18.75 19.25 14.8125 19.25 10C19.25 5.1875 15.3125 1.25 10.5 1.25Z"
+              fill="white"
+            />
+            <path
+              id="Vector_2"
+              d="M5.5 9.375H15.5V10.625H5.5V9.375Z"
+              fill="white"
+            />
+          </g>
+        </svg>
+      </button>
+      <span className="dessert__quantity-value">{quantity}</span>
+      <button
+        className="dessert__increment-btn"
+        type="button"
+        onClick={() => handleQuantityChange(1)}
+      >
+        <svg
+          className="dessert__increment-icon"
+          width="21"
+          height="20"
+          viewBox="0 0 21 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="Add to Cart - Add Icon">
+            <path
+              id="Vector"
+              d="M10.5 2.5C14.625 2.5 18 5.875 18 10C18 14.125 14.625 17.5 10.5 17.5C6.375 17.5 3 14.125 3 10C3 5.875 6.375 2.5 10.5 2.5ZM10.5 1.25C5.6875 1.25 1.75 5.1875 1.75 10C1.75 14.8125 5.6875 18.75 10.5 18.75C15.3125 18.75 19.25 14.8125 19.25 10C19.25 5.1875 15.3125 1.25 10.5 1.25Z"
+              fill="white"
+            />
+            <path
+              id="Vector_2"
+              d="M15.5 9.375H11.125V5H9.875V9.375H5.5V10.625H9.875V15H11.125V10.625H15.5V9.375Z"
+              fill="white"
+            />
+          </g>
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 function Cart({ cartItems, onHandleRemoveFromCart }) {
   const isCartEmpty = cartItems.length === 0;
+  const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="cart">
-      <span className="cart__quantity">Your Cart ({cartItems.length})</span>
+      <span className="cart__quantity">Your Cart ({cartQuantity})</span>
       {isCartEmpty ? (
         <CartEmpty />
       ) : (

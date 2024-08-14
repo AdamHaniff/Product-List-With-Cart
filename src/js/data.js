@@ -9,7 +9,7 @@ const data = [
     name: "Waffle with Berries",
     category: "Waffle",
     price: 6.5,
-    id: crypto.randomUUID(),
+    id: "48f7b066-1ab6-4fc6-9f49-1f7f358eb132",
   },
   {
     image: {
@@ -21,7 +21,7 @@ const data = [
     name: "Vanilla Bean Crème Brûlée",
     category: "Crème Brûlée",
     price: 7.0,
-    id: crypto.randomUUID(),
+    id: "b75b08ff-a814-4807-bc8a-e59aa12ae006",
   },
   {
     image: {
@@ -33,7 +33,7 @@ const data = [
     name: "Macaron Mix of Five",
     category: "Macaron",
     price: 8.0,
-    id: crypto.randomUUID(),
+    id: "0f85111d-c903-4d7c-b51d-fbb91ad53cca",
   },
   {
     image: {
@@ -45,7 +45,7 @@ const data = [
     name: "Classic Tiramisu",
     category: "Tiramisu",
     price: 5.5,
-    id: crypto.randomUUID(),
+    id: "66894e33-499e-454e-948d-cc941afe11a3",
   },
   {
     image: {
@@ -57,7 +57,7 @@ const data = [
     name: "Pistachio Baklava",
     category: "Baklava",
     price: 4.0,
-    id: crypto.randomUUID(),
+    id: "6a16e874-6312-4089-8b08-40861f126d4e",
   },
   {
     image: {
@@ -69,7 +69,7 @@ const data = [
     name: "Lemon Meringue Pie",
     category: "Pie",
     price: 5.0,
-    id: crypto.randomUUID(),
+    id: "c3996d19-1b57-43f9-8d6a-53edfdd094f4",
   },
   {
     image: {
@@ -81,7 +81,7 @@ const data = [
     name: "Red Velvet Cake",
     category: "Cake",
     price: 4.5,
-    id: crypto.randomUUID(),
+    id: "b65fec52-9d84-456e-9e44-4e52024b7c0d",
   },
   {
     image: {
@@ -93,7 +93,7 @@ const data = [
     name: "Salted Caramel Brownie",
     category: "Brownie",
     price: 4.5,
-    id: crypto.randomUUID(),
+    id: "96720544-98f6-4e42-9019-0e134a34d6d7",
   },
   {
     image: {
@@ -105,7 +105,7 @@ const data = [
     name: "Vanilla Panna Cotta",
     category: "Panna Cotta",
     price: 6.5,
-    id: crypto.randomUUID(),
+    id: "02840a61-cb8f-4c40-b87e-f5732557c1f8",
   },
 ];
 
