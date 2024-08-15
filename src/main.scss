@@ -76,7 +76,7 @@ body {
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 // ********* MOBILE LAYOUTS *********
@@ -88,6 +88,8 @@ body {
   align-items: center;
   gap: $spacing-400;
   padding: $spacing-300;
+  position: relative;
+  overflow-y: hidden;
 }
 
 // ************ DESSERTS ************
@@ -370,6 +372,11 @@ body {
   font-family: inherit;
   font-size: 1.6rem;
   font-weight: $fw-semi-bold;
+  transition: transform 0.1s ease-in-out;
+
+  &:active {
+    transform: translateY(0.2rem);
+  }
 }
 
 // ************** MODAL **************
@@ -380,8 +387,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: $spacing-400;
-  position: absolute;
   width: 100%;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
 
   &__icon-text {
     display: flex;
@@ -442,5 +452,12 @@ body {
 .dessert {
   &__img--added {
     border-color: $color-red;
+  }
+}
+
+// **************** MODAL ****************
+.modal {
+  &--slide {
+    transform: translateY(0);
   }
 }

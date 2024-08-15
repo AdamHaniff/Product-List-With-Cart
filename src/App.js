@@ -5,7 +5,7 @@ export default function App() {
   // STATE
   const [cartItems, setCartItems] = useState(function () {
     const storedValue = localStorage.getItem("cartItems");
-    return JSON.parse(storedValue);
+    return storedValue ? JSON.parse(storedValue) : [];
   });
 
   // HANDLER FUNCTIONS
@@ -46,7 +46,7 @@ export default function App() {
         cartItems={cartItems}
         onHandleRemoveFromCart={handleRemoveFromCart}
       />
-      {/* <Modal /> */}
+      <Modal cartItems={cartItems} />
     </div>
   );
 }
@@ -249,6 +249,7 @@ function CartFilled({ cartItems, onHandleRemoveFromCart }) {
       <Items
         cartItems={cartItems}
         onHandleRemoveFromCart={onHandleRemoveFromCart}
+        isModal={false}
       />
       <OrderTotalTextPrice cartItems={cartItems} />
       <CartOrder />
@@ -256,7 +257,7 @@ function CartFilled({ cartItems, onHandleRemoveFromCart }) {
   );
 }
 
-function Items({ cartItems, onHandleRemoveFromCart }) {
+function Items({ cartItems, onHandleRemoveFromCart, isModal }) {
   return (
     <ul className="items">
       {cartItems.map((dessert) => (
@@ -264,24 +265,22 @@ function Items({ cartItems, onHandleRemoveFromCart }) {
           key={dessert.id}
           dessert={dessert}
           onHandleRemoveFromCart={onHandleRemoveFromCart}
+          isModal={isModal}
         />
       ))}
     </ul>
   );
 }
 
-function Item({ dessert, onHandleRemoveFromCart }) {
-  const isModal = false;
+function Item({ dessert, onHandleRemoveFromCart, isModal }) {
   const itemTotalPrice = (dessert.price * dessert.quantity).toFixed(2);
+  const { name } = dessert;
+  const { thumbnail } = dessert.image;
 
   return (
     <li className="item">
       {isModal && (
-        <img
-          className="item__thumbnail"
-          src="images/image-tiramisu-thumbnail.jpg"
-          alt="Item thumbnail"
-        />
+        <img className="item__thumbnail" src={thumbnail} alt={name} />
       )}
       <div className="item__details">
         <span className="item__name">{dessert.name}</span>
@@ -294,7 +293,7 @@ function Item({ dessert, onHandleRemoveFromCart }) {
         </div>
       </div>
       {isModal ? (
-        <span className="item__total-price">$5.50</span>
+        <span className="item__total-price">${itemTotalPrice}</span>
       ) : (
         <button
           className="item__remove-btn"
@@ -366,7 +365,7 @@ function OrderBtn({ children }) {
   );
 }
 
-function Modal() {
+function Modal({ cartItems }) {
   return (
     <div className="modal">
       <div className="modal__icon-text">
@@ -383,8 +382,8 @@ function Modal() {
         </div>
       </div>
       <div className="modal__items-order">
-        <Items />
-        <OrderTotalTextPrice />
+        <Items cartItems={cartItems} isModal />
+        <OrderTotalTextPrice cartItems={cartItems} />
       </div>
       <OrderBtn>Start New Order</OrderBtn>
     </div>

@@ -30,7 +30,7 @@ body {
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 .app {
@@ -39,6 +39,8 @@ body {
   align-items: center;
   gap: 3.2rem;
   padding: 2.4rem;
+  position: relative;
+  overflow-y: hidden;
 }
 
 .desserts {
@@ -286,6 +288,10 @@ body {
   font-family: inherit;
   font-size: 1.6rem;
   font-weight: 600;
+  transition: transform 0.1s ease-in-out;
+}
+.btn-order:active {
+  transform: translateY(0.2rem);
 }
 
 .modal {
@@ -295,8 +301,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
-  position: absolute;
   width: 100%;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
 }
 .modal__icon-text {
   display: flex;
@@ -344,4 +353,8 @@ body {
 
 .dessert__img--added {
   border-color: #c73b0f;
+}
+
+.modal--slide {
+  transform: translateY(0);
 }/*# sourceMappingURL=main.css.map */
