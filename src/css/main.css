@@ -1,7 +1,3 @@
-.dessert__quantity--fade-in {
-  animation: fade-in 0.5s;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -10,6 +6,22 @@
     opacity: 1;
   }
 }
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.fade-in {
+  animation: fade-in 0.5s;
+}
+
+.slide-up {
+  animation: slide-up 0.5s;
+}
+
 *,
 *::before,
 *::after {
@@ -289,6 +301,7 @@ body {
   font-size: 1.6rem;
   font-weight: 600;
   transition: transform 0.1s ease-in-out;
+  padding: 1.6rem;
 }
 .btn-order:active {
   transform: translateY(0.2rem);
@@ -304,8 +317,7 @@ body {
   width: 100%;
   position: absolute;
   bottom: 0;
-  transform: translateY(100%);
-  transition: transform 0.3s ease-in-out;
+  z-index: 10;
 }
 .modal__icon-text {
   display: flex;
@@ -350,11 +362,16 @@ body {
   color: #260f08;
   font-size: 1.6rem;
 }
+.modal + .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
 
 .dessert__img--added {
   border-color: #c73b0f;
-}
-
-.modal--slide {
-  transform: translateY(0);
 }/*# sourceMappingURL=main.css.map */

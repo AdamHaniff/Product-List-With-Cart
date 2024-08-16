@@ -8,6 +8,8 @@ export default function App() {
     return storedValue ? JSON.parse(storedValue) : [];
   });
 
+  const [isModalDisplayed, setIsModalDisplayed] = useState(false);
+
   // HANDLER FUNCTIONS
   function handleAddToCart(dessert) {
     setCartItems((cartItems) => [...cartItems, { ...dessert, quantity: 1 }]);
@@ -27,6 +29,14 @@ export default function App() {
     );
   }
 
+  function handleConfirmOrderClick() {
+    setIsModalDisplayed(true);
+  }
+
+  function handleModalClose() {
+    setIsModalDisplayed(false);
+  }
+
   // SET UP LOCAL STORAGE
   useEffect(
     function () {
@@ -38,20 +48,23 @@ export default function App() {
   return (
     <div className="app">
       <Desserts
-        onHandleAddToCart={handleAddToCart}
+        onAddToCart={handleAddToCart}
         cartItems={cartItems}
         onQuantityUpdate={handleQuantityUpdate}
       />
       <Cart
         cartItems={cartItems}
-        onHandleRemoveFromCart={handleRemoveFromCart}
+        onRemoveFromCart={handleRemoveFromCart}
+        onConfirmOrderClick={handleConfirmOrderClick}
       />
-      <Modal cartItems={cartItems} />
+      {isModalDisplayed && (
+        <Modal cartItems={cartItems} onModalClose={handleModalClose} />
+      )}
     </div>
   );
 }
 
-function Desserts({ onHandleAddToCart, cartItems, onQuantityUpdate }) {
+function Desserts({ onAddToCart, cartItems, onQuantityUpdate }) {
   return (
     <div className="desserts">
       <h1 className="desserts__title">Desserts</h1>
@@ -60,7 +73,7 @@ function Desserts({ onHandleAddToCart, cartItems, onQuantityUpdate }) {
           <Dessert
             key={dessert.id}
             dessert={dessert}
-            onHandleAddToCart={onHandleAddToCart}
+            onAddToCart={onAddToCart}
             cartItems={cartItems}
             onQuantityUpdate={onQuantityUpdate}
           />
@@ -70,7 +83,7 @@ function Desserts({ onHandleAddToCart, cartItems, onQuantityUpdate }) {
   );
 }
 
-function Dessert({ dessert, onHandleAddToCart, cartItems, onQuantityUpdate }) {
+function Dessert({ dessert, onAddToCart, cartItems, onQuantityUpdate }) {
   // VARIABLES
   const { mobile, tablet, desktop } = dessert.image;
   const { name, category, price } = dessert;
@@ -93,10 +106,7 @@ function Dessert({ dessert, onHandleAddToCart, cartItems, onQuantityUpdate }) {
         </picture>
         <div className="dessert__btn-container">
           {!isAddedToCart ? (
-            <AddToCart
-              dessert={dessert}
-              onHandleAddToCart={onHandleAddToCart}
-            />
+            <AddToCart dessert={dessert} onAddToCart={onAddToCart} />
           ) : (
             <Quantity
               dessert={dessert}
@@ -115,12 +125,12 @@ function Dessert({ dessert, onHandleAddToCart, cartItems, onQuantityUpdate }) {
   );
 }
 
-function AddToCart({ dessert, onHandleAddToCart }) {
+function AddToCart({ dessert, onAddToCart }) {
   return (
     <button
       className="dessert__cart-btn"
       type="button"
-      onClick={() => onHandleAddToCart(dessert)}
+      onClick={() => onAddToCart(dessert)}
     >
       <img
         className="dessert__cart-icon"
@@ -149,7 +159,7 @@ function Quantity({ dessert, onQuantityUpdate, cartItems }) {
   }
 
   return (
-    <div className="dessert__quantity dessert__quantity--fade-in">
+    <div className="dessert__quantity fade-in">
       <button
         className="dessert__decrement-btn"
         type="button"
@@ -209,7 +219,7 @@ function Quantity({ dessert, onQuantityUpdate, cartItems }) {
   );
 }
 
-function Cart({ cartItems, onHandleRemoveFromCart }) {
+function Cart({ cartItems, onRemoveFromCart, onConfirmOrderClick }) {
   const isCartEmpty = cartItems.length === 0;
   const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -221,7 +231,8 @@ function Cart({ cartItems, onHandleRemoveFromCart }) {
       ) : (
         <CartFilled
           cartItems={cartItems}
-          onHandleRemoveFromCart={onHandleRemoveFromCart}
+          onRemoveFromCart={onRemoveFromCart}
+          onConfirmOrderClick={onConfirmOrderClick}
         />
       )}
     </div>
@@ -243,28 +254,28 @@ function CartEmpty() {
   );
 }
 
-function CartFilled({ cartItems, onHandleRemoveFromCart }) {
+function CartFilled({ cartItems, onRemoveFromCart, onConfirmOrderClick }) {
   return (
     <div className="cart__filled">
       <Items
         cartItems={cartItems}
-        onHandleRemoveFromCart={onHandleRemoveFromCart}
+        onRemoveFromCart={onRemoveFromCart}
         isModal={false}
       />
       <OrderTotalTextPrice cartItems={cartItems} />
-      <CartOrder />
+      <CartOrder onConfirmOrderClick={onConfirmOrderClick} />
     </div>
   );
 }
 
-function Items({ cartItems, onHandleRemoveFromCart, isModal }) {
+function Items({ cartItems, onRemoveFromCart, isModal }) {
   return (
     <ul className="items">
       {cartItems.map((dessert) => (
         <Item
           key={dessert.id}
           dessert={dessert}
-          onHandleRemoveFromCart={onHandleRemoveFromCart}
+          onRemoveFromCart={onRemoveFromCart}
           isModal={isModal}
         />
       ))}
@@ -272,7 +283,7 @@ function Items({ cartItems, onHandleRemoveFromCart, isModal }) {
   );
 }
 
-function Item({ dessert, onHandleRemoveFromCart, isModal }) {
+function Item({ dessert, onRemoveFromCart, isModal }) {
   const itemTotalPrice = (dessert.price * dessert.quantity).toFixed(2);
   const { name } = dessert;
   const { thumbnail } = dessert.image;
@@ -297,7 +308,7 @@ function Item({ dessert, onHandleRemoveFromCart, isModal }) {
       ) : (
         <button
           className="item__remove-btn"
-          onClick={() => onHandleRemoveFromCart(dessert.id)}
+          onClick={() => onRemoveFromCart(dessert.id)}
         >
           <svg
             className="item__remove-icon"
@@ -335,7 +346,12 @@ function OrderTotalTextPrice({ cartItems }) {
   );
 }
 
-function CartOrder() {
+function CartOrder({ onConfirmOrderClick }) {
+  // HANDLER FUNCTIONS
+  function handleOrderBtnClick() {
+    onConfirmOrderClick();
+  }
+
   return (
     <div className="cart__order">
       <div className="cart__order-icon-delivery">
@@ -352,40 +368,47 @@ function CartOrder() {
           delivery
         </span>
       </div>
-      <OrderBtn>Confirm Order</OrderBtn>
+      <OrderBtn handleClick={handleOrderBtnClick}>Confirm Order</OrderBtn>
     </div>
   );
 }
 
-function OrderBtn({ children }) {
+function OrderBtn({ children, handleClick }) {
   return (
-    <button className="btn-order" type="button">
+    <button className="btn-order" type="button" onClick={handleClick}>
       {children}
     </button>
   );
 }
 
-function Modal({ cartItems }) {
+function Modal({ cartItems, onModalClose }) {
+  function handleOverlayClick() {
+    onModalClose();
+  }
+
   return (
-    <div className="modal">
-      <div className="modal__icon-text">
-        <img
-          className="modal__confirmed-icon"
-          src="images/icon-order-confirmed.svg"
-          alt="Order confirmed icon with a green checkmark inside a green circle"
-        />
-        <div className="modal__text">
-          <span className="modal__text-confirmed">Order Confirmed</span>
-          <span className="modal__text-enjoy">
-            We hope you enjoy your food!
-          </span>
+    <>
+      <div className="modal slide-up">
+        <div className="modal__icon-text">
+          <img
+            className="modal__confirmed-icon"
+            src="images/icon-order-confirmed.svg"
+            alt="Order confirmed icon with a green checkmark inside a green circle"
+          />
+          <div className="modal__text">
+            <span className="modal__text-confirmed">Order Confirmed</span>
+            <span className="modal__text-enjoy">
+              We hope you enjoy your food!
+            </span>
+          </div>
         </div>
+        <div className="modal__items-order">
+          <Items cartItems={cartItems} isModal />
+          <OrderTotalTextPrice cartItems={cartItems} />
+        </div>
+        <OrderBtn>Start New Order</OrderBtn>
       </div>
-      <div className="modal__items-order">
-        <Items cartItems={cartItems} isModal />
-        <OrderTotalTextPrice cartItems={cartItems} />
-      </div>
-      <OrderBtn>Start New Order</OrderBtn>
-    </div>
+      <div className="overlay fade-in" onClick={handleOverlayClick}></div>
+    </>
   );
 }

@@ -11,6 +11,7 @@ $color-rose-50: #fcf8f6;
 $color-green: #1ea575;
 $color-black: #000;
 $color-white: #fff;
+$color-overlay-bg: rgba(0, 0, 0, 0.5);
 
 // ********** FONT-FAMILY **********
 $font-red-hat-text: "Red Hat Text", sans-serif;
@@ -42,10 +43,6 @@ $spacing-50: 0.4rem;
 }
 
 // ************ ANIMATIONS ************
-.dessert__quantity--fade-in {
-  animation: fade-in 0.5s;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -53,6 +50,24 @@ $spacing-50: 0.4rem;
   to {
     opacity: 1;
   }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+// ********** ANIMATION CLASSES **********
+.fade-in {
+  animation: fade-in 0.5s;
+}
+
+.slide-up {
+  animation: slide-up 0.5s;
 }
 
 // ************* BASE *************
@@ -373,6 +388,7 @@ body {
   font-size: 1.6rem;
   font-weight: $fw-semi-bold;
   transition: transform 0.1s ease-in-out;
+  padding: $spacing-200;
 
   &:active {
     transform: translateY(0.2rem);
@@ -390,8 +406,7 @@ body {
   width: 100%;
   position: absolute;
   bottom: 0;
-  transform: translateY(100%);
-  transition: transform 0.3s ease-in-out;
+  z-index: 10;
 
   &__icon-text {
     display: flex;
@@ -444,6 +459,16 @@ body {
       }
     }
   }
+
+  & + .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $color-overlay-bg;
+    z-index: 5;
+  }
 }
 
 // ********** DYNAMIC STYLES **********
@@ -452,12 +477,5 @@ body {
 .dessert {
   &__img--added {
     border-color: $color-red;
-  }
-}
-
-// **************** MODAL ****************
-.modal {
-  &--slide {
-    transform: translateY(0);
   }
 }
