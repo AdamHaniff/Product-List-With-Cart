@@ -6,6 +6,14 @@
     opacity: 1;
   }
 }
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 @keyframes slide-up {
   from {
     transform: translateY(100%);
@@ -16,6 +24,10 @@
 }
 .fade-in {
   animation: fade-in 0.5s;
+}
+
+.fade-out {
+  animation: fade-out 0.5s;
 }
 
 .slide-up {
@@ -315,9 +327,12 @@ body {
   flex-direction: column;
   gap: 3.2rem;
   width: 100%;
-  position: absolute;
   bottom: 0;
   z-index: 10;
+  position: fixed;
+  max-height: 100vh;
+  overflow-y: auto;
+  top: 10%;
 }
 .modal__icon-text {
   display: flex;
@@ -374,4 +389,8 @@ body {
 
 .dessert__img--added {
   border-color: #c73b0f;
+}
+
+.modal-open {
+  overflow: hidden;
 }/*# sourceMappingURL=main.css.map */

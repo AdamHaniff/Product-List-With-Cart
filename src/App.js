@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import data from "./js/data";
 
 export default function App() {
@@ -382,13 +382,37 @@ function OrderBtn({ children, handleClick }) {
 }
 
 function Modal({ cartItems, onModalClose }) {
+  // VARIABLES
+  const modalEl = useRef(null);
+  const overlayEl = useRef(null);
+
+  // HANDLER FUNCTIONS
   function handleOverlayClick() {
     onModalClose();
   }
 
+  // EFFECTS
+  useEffect(function () {
+    // Don't allow the body to scroll when the modal is displayed
+    document.body.classList.add("modal-open");
+
+    modalEl.current.classList.remove("fade-out");
+    overlayEl.current.classList.remove("fade-out");
+
+    return () => {
+      const modalElement = modalEl.current;
+      const overlayElement = overlayEl.current;
+
+      document.body.classList.remove("modal-open");
+
+      if (modalElement) modalElement.classList.add("fade-out");
+      if (overlayElement) overlayElement.classList.add("fade-out");
+    };
+  }, []);
+
   return (
     <>
-      <div className="modal slide-up">
+      <div className="modal slide-up" ref={modalEl}>
         <div className="modal__icon-text">
           <img
             className="modal__confirmed-icon"
@@ -408,7 +432,11 @@ function Modal({ cartItems, onModalClose }) {
         </div>
         <OrderBtn>Start New Order</OrderBtn>
       </div>
-      <div className="overlay fade-in" onClick={handleOverlayClick}></div>
+      <div
+        className="overlay fade-in"
+        onClick={handleOverlayClick}
+        ref={overlayEl}
+      ></div>
     </>
   );
 }
