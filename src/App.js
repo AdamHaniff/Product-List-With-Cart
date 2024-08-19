@@ -1,5 +1,4 @@
-import { CSSTransition } from "react-transition-group";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import data from "./js/data";
 
 export default function App() {
@@ -59,11 +58,7 @@ export default function App() {
         onConfirmOrderClick={handleConfirmOrderClick}
       />
       {isModalDisplayed && (
-        <Modal
-          cartItems={cartItems}
-          onModalClose={handleModalClose}
-          isModalDisplayed={isModalDisplayed}
-        />
+        <Modal cartItems={cartItems} onModalClose={handleModalClose} />
       )}
     </div>
   );
@@ -386,10 +381,17 @@ function OrderBtn({ children, handleClick }) {
   );
 }
 
-function Modal({ cartItems, onModalClose, isModalDisplayed }) {
+function Modal({ cartItems, onModalClose }) {
+  // VARIABLES
+  const modalEl = useRef(null);
+  const overlayEl = useRef(null);
+
   // HANDLER FUNCTIONS
   function handleOverlayClick() {
-    onModalClose();
+    modalEl.current.classList.remove("slide-up");
+    modalEl.current.classList.add("fade-out");
+    overlayEl.current.classList.add("fade-out");
+    setTimeout(() => onModalClose(), 400);
   }
 
   // EFFECTS
@@ -402,44 +404,31 @@ function Modal({ cartItems, onModalClose, isModalDisplayed }) {
 
   return (
     <>
-      <CSSTransition
-        in={isModalDisplayed}
-        timeout={500}
-        classNames="fade"
-        unmountOnExit
-        onExited={onModalClose}
-      >
-        <div className="modal slide-up">
-          <div className="modal__icon-text">
-            <img
-              className="modal__confirmed-icon"
-              src="images/icon-order-confirmed.svg"
-              alt="Order confirmed icon with a green checkmark inside a green circle"
-            />
-            <div className="modal__text">
-              <span className="modal__text-confirmed">Order Confirmed</span>
-              <span className="modal__text-enjoy">
-                We hope you enjoy your food!
-              </span>
-            </div>
+      <div className="modal slide-up" ref={modalEl}>
+        <div className="modal__icon-text">
+          <img
+            className="modal__confirmed-icon"
+            src="images/icon-order-confirmed.svg"
+            alt="Order confirmed icon with a green checkmark inside a green circle"
+          />
+          <div className="modal__text">
+            <span className="modal__text-confirmed">Order Confirmed</span>
+            <span className="modal__text-enjoy">
+              We hope you enjoy your food!
+            </span>
           </div>
-          <div className="modal__items-order">
-            <Items cartItems={cartItems} isModal />
-            <OrderTotalTextPrice cartItems={cartItems} />
-          </div>
-          <OrderBtn>Start New Order</OrderBtn>
         </div>
-      </CSSTransition>
-
-      <CSSTransition
-        in={isModalDisplayed}
-        timeout={500}
-        classNames="fade"
-        unmountOnExit
-        onExited={onModalClose}
-      >
-        <div className="overlay fade-in" onClick={handleOverlayClick}></div>
-      </CSSTransition>
+        <div className="modal__items-order">
+          <Items cartItems={cartItems} isModal />
+          <OrderTotalTextPrice cartItems={cartItems} />
+        </div>
+        <OrderBtn>Start New Order</OrderBtn>
+      </div>
+      <div
+        className="overlay fade-in"
+        onClick={handleOverlayClick}
+        ref={overlayEl}
+      ></div>
     </>
   );
 }

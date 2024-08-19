@@ -43,14 +43,23 @@ $spacing-50: 0.4rem;
 }
 
 // ************ ANIMATIONS ************
-// @keyframes fade-in {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 
 @keyframes slide-up {
   from {
@@ -62,17 +71,12 @@ $spacing-50: 0.4rem;
 }
 
 // ********** ANIMATION CLASSES **********
-// .fade-in {
-//   animation: fade-in 0.5s;
-// }
-
-.fade-exit {
-  opacity: 1;
+.fade-in {
+  animation: fade-in 0.5s;
 }
 
-.fade-exit-active {
-  opacity: 0;
-  transition: opacity 0.5s ease-out;
+.fade-out {
+  animation: fade-out 0.5s;
 }
 
 .slide-up {
