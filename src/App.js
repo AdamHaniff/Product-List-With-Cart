@@ -58,7 +58,11 @@ export default function App() {
         onConfirmOrderClick={handleConfirmOrderClick}
       />
       {isModalDisplayed && (
-        <Modal cartItems={cartItems} onModalClose={handleModalClose} />
+        <Modal
+          cartItems={cartItems}
+          onModalClose={handleModalClose}
+          setCartItems={setCartItems}
+        />
       )}
     </div>
   );
@@ -285,16 +289,19 @@ function Items({ cartItems, onRemoveFromCart, isModal }) {
 
 function Item({ dessert, onRemoveFromCart, isModal }) {
   const itemTotalPrice = (dessert.price * dessert.quantity).toFixed(2);
-  const { name } = dessert;
   const { thumbnail } = dessert.image;
+  const formattedName =
+    dessert.name.length > 20 ? dessert.name.slice(0, 20) + "..." : dessert.name;
 
   return (
     <li className="item">
       {isModal && (
-        <img className="item__thumbnail" src={thumbnail} alt={name} />
+        <img className="item__thumbnail" src={thumbnail} alt={dessert.name} />
       )}
       <div className="item__details">
-        <span className="item__name">{dessert.name}</span>
+        <span className="item__name">
+          {isModal ? formattedName : dessert.name}
+        </span>
         <div className="item__pricing">
           <span className="item__quantity">{dessert.quantity}x</span>
           <span className="item__price">@ {dessert.price.toFixed(2)}</span>
@@ -381,17 +388,25 @@ function OrderBtn({ children, handleClick }) {
   );
 }
 
-function Modal({ cartItems, onModalClose }) {
+function Modal({ cartItems, onModalClose, setCartItems }) {
   // VARIABLES
   const modalEl = useRef(null);
   const overlayEl = useRef(null);
 
   // HANDLER FUNCTIONS
-  function handleOverlayClick() {
+  function handleModalOverlayClose() {
     modalEl.current.classList.remove("slide-up");
     modalEl.current.classList.add("fade-out");
     overlayEl.current.classList.add("fade-out");
     setTimeout(() => onModalClose(), 400);
+  }
+
+  function handleNewOrderClick() {
+    // Close modal and overlay
+    handleModalOverlayClose();
+
+    // Remove all items from the cart
+    setTimeout(() => setCartItems([]), 400);
   }
 
   // EFFECTS
@@ -422,11 +437,11 @@ function Modal({ cartItems, onModalClose }) {
           <Items cartItems={cartItems} isModal />
           <OrderTotalTextPrice cartItems={cartItems} />
         </div>
-        <OrderBtn>Start New Order</OrderBtn>
+        <OrderBtn handleClick={handleNewOrderClick}>Start New Order</OrderBtn>
       </div>
       <div
         className="overlay fade-in"
-        onClick={handleOverlayClick}
+        onClick={handleModalOverlayClose}
         ref={overlayEl}
       ></div>
     </>
