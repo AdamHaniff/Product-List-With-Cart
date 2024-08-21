@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import data from "./js/data";
 
 export default function App() {
@@ -29,15 +29,11 @@ export default function App() {
     );
   }
 
-  function handleConfirmOrderClick() {
-    setIsModalDisplayed(true);
-  }
+  const handleConfirmOrderClick = () => setIsModalDisplayed(true);
 
-  function handleModalClose() {
-    setIsModalDisplayed(false);
-  }
+  const handleModalClose = () => setIsModalDisplayed(false);
 
-  // SET UP LOCAL STORAGE
+  // EFFECTS
   useEffect(
     function () {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -355,9 +351,7 @@ function OrderTotalTextPrice({ cartItems }) {
 
 function CartOrder({ onConfirmOrderClick }) {
   // HANDLER FUNCTIONS
-  function handleOrderBtnClick() {
-    onConfirmOrderClick();
-  }
+  const handleOrderBtnClick = () => onConfirmOrderClick();
 
   return (
     <div className="cart__order">
@@ -394,12 +388,12 @@ function Modal({ cartItems, onModalClose, setCartItems }) {
   const overlayEl = useRef(null);
 
   // HANDLER FUNCTIONS
-  function handleModalOverlayClose() {
+  const handleModalOverlayClose = useCallback(() => {
     modalEl.current.classList.remove("slide-up");
     modalEl.current.classList.add("fade-out");
     overlayEl.current.classList.add("fade-out");
     setTimeout(() => onModalClose(), 400);
-  }
+  }, [onModalClose]);
 
   function handleNewOrderClick() {
     // Close modal and overlay
@@ -416,6 +410,22 @@ function Modal({ cartItems, onModalClose, setCartItems }) {
 
     return () => document.body.classList.remove("modal-open");
   }, []);
+
+  useEffect(
+    function () {
+      function handleEscapeKeyPress(e) {
+        if (e.key === "Escape" || e.key === "Esc") {
+          handleModalOverlayClose();
+        }
+      }
+
+      document.addEventListener("keydown", handleEscapeKeyPress);
+
+      return () =>
+        document.removeEventListener("keydown", handleEscapeKeyPress);
+    },
+    [handleModalOverlayClose]
+  );
 
   return (
     <>
