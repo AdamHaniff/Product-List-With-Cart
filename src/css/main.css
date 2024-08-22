@@ -247,8 +247,8 @@ body {
 }
 .item__thumbnail {
   display: block;
-  width: 4.8rem;
-  height: 4.8rem;
+  width: clamp(4.6rem, 4.6rem + 2 * (100vw - 32rem) / 55, 4.8rem);
+  height: clamp(4.6rem, 4.6rem + 2 * (100vw - 32rem) / 55, 4.8rem);
   border-radius: 0.4rem;
   margin-right: 1.6rem;
 }
@@ -360,7 +360,7 @@ body {
   font-size: 1.6rem;
 }
 .modal__items-order {
-  padding: 2.4rem;
+  padding: clamp(2rem, 2rem + 4 * (100vw - 32rem) / 55, 2.4rem);
   border-radius: 0.8rem;
   background: #fcf8f6;
   display: flex;
@@ -370,13 +370,19 @@ body {
 .modal__items-order .items .item {
   justify-content: initial;
 }
-.modal__items-order .items .item .item__details .item__pricing {
+.modal__items-order .items .item .item__details {
+  margin-right: 1.6rem;
+}
+.modal__items-order .items .item .item__details .item__name {
+  font-size: clamp(1.2rem, 1.2rem + 2 * (100vw - 32rem) / 55, 1.4rem);
+}
+.modal__items-order .items .item .item__details .item-pricing {
   gap: 1.6rem;
 }
 .modal__items-order .items .item .item__total-price {
   margin-left: auto;
   color: #260f08;
-  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 1.4rem + 2 * (100vw - 32rem) / 55, 1.6rem);
 }
 .modal + .overlay {
   position: fixed;

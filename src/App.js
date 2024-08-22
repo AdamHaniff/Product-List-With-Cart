@@ -392,6 +392,7 @@ function Modal({ cartItems, onModalClose, setCartItems }) {
     modalEl.current.classList.remove("slide-up");
     modalEl.current.classList.add("fade-out");
     overlayEl.current.classList.add("fade-out");
+
     setTimeout(() => onModalClose(), 400);
   }, [onModalClose]);
 
