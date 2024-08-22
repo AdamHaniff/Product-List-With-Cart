@@ -213,7 +213,7 @@ body {
 .cart__order-icon-delivery {
   background: #fcf8f6;
   border-radius: 0.8rem;
-  padding: 1.6rem;
+  padding: clamp(1.4rem, 1.4rem + 2 * (100vw - 32rem) / 55, 1.6rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -224,7 +224,8 @@ body {
 }
 .cart__order-delivery {
   color: #260f08;
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 1.2rem + 2 * (100vw - 32rem) / 55, 1.4rem);
+  white-space: nowrap;
 }
 .cart__order-delivery-semi-bold {
   font-weight: 600;

@@ -31,6 +31,19 @@ $spacing-150: 1.2rem;
 $spacing-100: 0.8rem;
 $spacing-50: 0.4rem;
 
+// ******* RESPONSIVE VARIABLES *******
+$responsive-12px-14px: clamp(
+  1.2rem,
+  calc(1.2rem + (2 * ((100vw - 32rem) / 55))),
+  1.4rem
+);
+
+$responsive-14px-16px: clamp(
+  1.4rem,
+  calc(1.4rem + (2 * ((100vw - 32rem) / 55))),
+  1.6rem
+);
+
 // ************** MIXINS **************
 @mixin dessert-btn-styles($bg-color) {
   display: flex;
@@ -281,7 +294,7 @@ body {
   &__order-icon-delivery {
     background: $color-rose-50;
     border-radius: 0.8rem;
-    padding: $spacing-200;
+    padding: $responsive-14px-16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -294,7 +307,8 @@ body {
 
   &__order-delivery {
     color: $color-rose-900;
-    font-size: 1.4rem;
+    font-size: $responsive-12px-14px;
+    white-space: nowrap;
 
     &-semi-bold {
       font-weight: $fw-semi-bold;
