@@ -237,6 +237,9 @@ body {
 .items .item:not(:first-child) {
   padding-top: 1.6rem;
 }
+.items .item:last-child {
+  padding-bottom: 2.4rem;
+}
 
 .item {
   display: flex;
@@ -323,7 +326,7 @@ body {
 .modal {
   border-radius: 1.2rem 1.2rem 0 0;
   background: #fff;
-  padding: 4rem 2.4rem 2.4rem;
+  padding: 4rem clamp(2.4rem, 2.4rem + 16 * (100vw - 37.5rem) / 393, 4rem) clamp(2.4rem, 2.4rem + 16 * (100vw - 37.5rem) / 393, 4rem);
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
@@ -376,7 +379,7 @@ body {
 .modal__items-order .items .item .item__details .item__name {
   font-size: clamp(1.2rem, 1.2rem + 2 * (100vw - 32rem) / 55, 1.4rem);
 }
-.modal__items-order .items .item .item__details .item-pricing {
+.modal__items-order .items .item .item__details .item__pricing {
   gap: 1.6rem;
 }
 .modal__items-order .items .item .item__total-price {
@@ -394,6 +397,22 @@ body {
   z-index: 5;
 }
 
+@media only screen and (min-width: 35.9375em) {
+  .app {
+    padding: 4rem;
+  }
+  .desserts__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3.2rem 2.4rem;
+  }
+  .cart {
+    max-width: initial;
+  }
+  .modal {
+    width: calc(100% - 8rem);
+  }
+}
 .dessert__img--added {
   border-color: #c73b0f;
 }

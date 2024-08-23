@@ -56,6 +56,12 @@ $responsive-46px-48px: clamp(
   4.8rem
 );
 
+$responsive-24px-40px: clamp(
+  2.4rem,
+  calc(2.4rem + (40 - 24) * ((100vw - 37.5rem) / (768 - 375))),
+  4rem
+);
+
 // ************** MIXINS **************
 @mixin dessert-btn-styles($bg-color) {
   display: flex;
@@ -335,6 +341,10 @@ body {
   & .item:not(:first-child) {
     padding-top: $spacing-200;
   }
+
+  & .item:last-child {
+    padding-bottom: $spacing-300;
+  }
 }
 
 // *************** ITEM ***************
@@ -438,7 +448,7 @@ body {
 .modal {
   border-radius: 1.2rem 1.2rem 0 0;
   background: $color-white;
-  padding: $spacing-500 $spacing-300 $spacing-300;
+  padding: $spacing-500 $responsive-24px-40px $responsive-24px-40px;
   display: flex;
   flex-direction: column;
   gap: $spacing-400;
@@ -497,7 +507,7 @@ body {
           font-size: $responsive-12px-14px;
         }
 
-        & .item-pricing {
+        & .item__pricing {
           gap: $spacing-200;
         }
       }
@@ -518,6 +528,32 @@ body {
     height: 100%;
     background: $color-overlay-bg;
     z-index: 5;
+  }
+}
+
+// ************ 575px LAYOUT ************
+@media only screen and (min-width: 35.9375em) {
+  .app {
+    padding: $spacing-500;
+  }
+
+  // ************* DESSERTS *************
+  .desserts {
+    &__container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-400 $spacing-300;
+    }
+  }
+
+  // *************** CART ***************
+  .cart {
+    max-width: initial;
+  }
+
+  // *************** MODAL ***************
+  .modal {
+    width: calc(100% - 8rem);
   }
 }
 
