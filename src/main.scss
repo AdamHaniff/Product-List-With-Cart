@@ -533,6 +533,17 @@ body {
 
 // ************ 575px LAYOUT ************
 @media only screen and (min-width: 35.9375em) {
+  // ************ ANIMATIONS ************
+  @keyframes slide-up {
+    from {
+      top: 100%;
+    }
+    to {
+      top: 50%;
+    }
+  }
+
+  // **************** APP ****************
   .app {
     padding: $spacing-500;
   }
@@ -546,6 +557,13 @@ body {
     }
   }
 
+  // ************** DESSERT **************
+  .dessert {
+    &__image-container {
+      max-width: 33.2rem;
+    }
+  }
+
   // *************** CART ***************
   .cart {
     max-width: initial;
@@ -553,7 +571,24 @@ body {
 
   // *************** MODAL ***************
   .modal {
+    border-radius: 1.2rem;
     width: calc(100% - 8rem);
+    bottom: initial;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// ************ TABLET LAYOUT ************
+
+// ************ 768px LAYOUT ************
+@media only screen and (min-width: 48em) {
+  // ************* DESSERTS *************
+  .desserts {
+    &__container {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 }
 

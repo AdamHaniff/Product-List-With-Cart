@@ -398,6 +398,14 @@ body {
 }
 
 @media only screen and (min-width: 35.9375em) {
+  @keyframes slide-up {
+    from {
+      top: 100%;
+    }
+    to {
+      top: 50%;
+    }
+  }
   .app {
     padding: 4rem;
   }
@@ -406,11 +414,24 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 3.2rem 2.4rem;
   }
+  .dessert__image-container {
+    max-width: 33.2rem;
+  }
   .cart {
     max-width: initial;
   }
   .modal {
+    border-radius: 1.2rem;
     width: calc(100% - 8rem);
+    bottom: initial;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+@media only screen and (min-width: 48em) {
+  .desserts__container {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 .dessert__img--added {
