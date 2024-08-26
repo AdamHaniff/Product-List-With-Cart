@@ -191,6 +191,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1.6rem;
+  padding: 1.6rem 0;
 }
 .cart__empty-img {
   display: block;
@@ -418,11 +419,12 @@ body {
     max-width: 33.2rem;
   }
   .cart {
-    max-width: initial;
+    max-width: 80.2rem;
   }
   .modal {
     border-radius: 1.2rem;
     width: calc(100% - 8rem);
+    max-width: 80.2rem;
     bottom: initial;
     top: 50%;
     left: 50%;
@@ -432,6 +434,24 @@ body {
 @media only screen and (min-width: 48em) {
   .desserts__container {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .dessert__image-container {
+    max-width: 25.1rem;
+  }
+}
+@media only screen and (min-width: 90em) {
+  #root {
+    padding: 8.8rem 4rem;
+    display: flex;
+    justify-content: center;
+  }
+  .app {
+    flex-direction: row;
+    align-items: start;
+    padding: initial;
+  }
+  .cart {
+    width: 38.4rem;
   }
 }
 .dessert__img--added {

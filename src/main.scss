@@ -285,6 +285,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: $spacing-200;
+    padding: $spacing-200 0;
   }
 
   &__empty-img {
@@ -566,13 +567,14 @@ body {
 
   // *************** CART ***************
   .cart {
-    max-width: initial;
+    max-width: 80.2rem;
   }
 
   // *************** MODAL ***************
   .modal {
     border-radius: 1.2rem;
     width: calc(100% - 8rem);
+    max-width: 80.2rem;
     bottom: initial;
     top: 50%;
     left: 50%;
@@ -589,6 +591,37 @@ body {
     &__container {
       grid-template-columns: repeat(3, 1fr);
     }
+  }
+
+  // ************** DESSERT **************
+  .dessert {
+    &__image-container {
+      max-width: 25.1rem;
+    }
+  }
+}
+
+// *********** DESKTOP LAYOUT ***********
+
+// ************ 1440px LAYOUT ************
+@media only screen and (min-width: 90em) {
+  // *************** ROOT ***************
+  #root {
+    padding: $spacing-1100 $spacing-500;
+    display: flex;
+    justify-content: center;
+  }
+
+  // **************** APP ****************
+  .app {
+    flex-direction: row;
+    align-items: start;
+    padding: initial;
+  }
+
+  // *************** CART ***************
+  .cart {
+    width: 38.4rem;
   }
 }
 
