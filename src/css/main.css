@@ -53,8 +53,9 @@ body {
 }
 
 html,
-body {
-  min-height: 100%;
+body,
+#root {
+  min-height: 100vh;
 }
 
 .app {
@@ -119,6 +120,8 @@ body {
   border-radius: 99.9rem;
   padding: 1.2rem;
   background: #fff;
+  cursor: pointer;
+  transition: border-color 0.5s;
 }
 .dessert__cart-icon {
   display: block;
@@ -128,6 +131,7 @@ body {
   font-family: "Red Hat Text", sans-serif;
   font-size: 1.4rem;
   font-weight: 600;
+  transition: color 0.5s;
 }
 .dessert__quantity {
   justify-content: space-between;
@@ -142,6 +146,7 @@ body {
 .dessert__decrement-btn, .dessert__increment-btn {
   background: none;
   border: none;
+  cursor: pointer;
 }
 .dessert__decrement-icon, .dessert__increment-icon {
   display: block;
@@ -441,9 +446,10 @@ body {
 }
 @media only screen and (min-width: 90em) {
   #root {
-    padding: 8.8rem 4rem;
+    padding: 8.8rem 0;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .app {
     flex-direction: row;
@@ -452,6 +458,20 @@ body {
   }
   .cart {
     width: 38.4rem;
+  }
+  .modal {
+    width: 59.2rem;
+  }
+}
+@media only screen and (min-width: 62em) {
+  .dessert__cart-btn:hover {
+    border: 0.1rem solid #c73b0f;
+  }
+  .dessert__cart-btn:hover .dessert__cart-text {
+    color: #c73b0f;
+  }
+  .dessert__decrement-btn:hover #Vector_2 {
+    fill: #c73b0f;
   }
 }
 .dessert__img--added {

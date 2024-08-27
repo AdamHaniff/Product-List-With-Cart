@@ -134,8 +134,9 @@ body {
 }
 
 html,
-body {
-  min-height: 100%;
+body,
+#root {
+  min-height: 100vh;
 }
 
 // ********* MOBILE LAYOUTS *********
@@ -204,6 +205,8 @@ body {
     gap: $spacing-100;
     border: 0.1rem solid $color-rose-400;
     @include dessert-btn-styles($color-white);
+    cursor: pointer;
+    transition: border-color 0.5s;
   }
 
   &__cart-icon {
@@ -215,6 +218,7 @@ body {
     font-family: $font-red-hat-text;
     font-size: 1.4rem;
     font-weight: $fw-semi-bold;
+    transition: color 0.5s;
   }
 
   &__quantity {
@@ -226,6 +230,7 @@ body {
   &__increment-btn {
     background: none;
     border: none;
+    cursor: pointer;
   }
 
   &__decrement-icon,
@@ -607,9 +612,10 @@ body {
 @media only screen and (min-width: 90em) {
   // *************** ROOT ***************
   #root {
-    padding: $spacing-1100 $spacing-500;
+    padding: $spacing-1100 0;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   // **************** APP ****************
@@ -622,6 +628,33 @@ body {
   // *************** CART ***************
   .cart {
     width: 38.4rem;
+  }
+
+  // *************** MODAL ***************
+  .modal {
+    width: 59.2rem;
+  }
+}
+
+// ******** DESKTOP HOVER STATES ********
+
+// ********** 992px MEDIA QUERY **********
+@media only screen and (min-width: 62em) {
+  // ************** DESSERT **************
+  .dessert {
+    &__cart-btn:hover {
+      border: 0.1rem solid $color-red;
+
+      & .dessert__cart-text {
+        color: $color-red;
+      }
+    }
+
+    &__decrement-btn:hover {
+      #Vector_2 {
+        fill: $color-red;
+      }
+    }
   }
 }
 

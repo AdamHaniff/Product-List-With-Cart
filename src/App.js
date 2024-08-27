@@ -173,6 +173,7 @@ function Quantity({ dessert, onQuantityUpdate, cartItems }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <circle cx="10.5" cy="10" r="8" fill="yellow" />
           <g id="Add to Cart - Subtract Icon">
             <path
               id="Vector"
