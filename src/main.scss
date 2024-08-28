@@ -12,6 +12,7 @@ $color-green: #1ea575;
 $color-black: #000;
 $color-white: #fff;
 $color-overlay-bg: rgba(0, 0, 0, 0.5);
+$color-brown-red: #952c0c;
 
 // ********** FONT-FAMILY **********
 $font-red-hat-text: "Red Hat Text", sans-serif;
@@ -268,6 +269,12 @@ body,
   }
 }
 
+// *** DESSERT DECREMENT/INCREMENT IDS ***
+#Vector_2,
+#icon-bg {
+  transition: fill 0.5s;
+}
+
 // ************** CART **************
 .cart {
   display: flex;
@@ -407,10 +414,15 @@ body,
   &__remove-btn {
     border: none;
     background: none;
+    cursor: pointer;
   }
 
   &__remove-icon {
     display: block;
+
+    & path {
+      transition: fill 0.5s;
+    }
   }
 }
 
@@ -442,8 +454,9 @@ body,
   font-family: inherit;
   font-size: 1.6rem;
   font-weight: $fw-semi-bold;
-  transition: transform 0.1s ease-in-out;
   padding: $spacing-200;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out, background 0.5s;
 
   &:active {
     transform: translateY(0.2rem);
@@ -650,11 +663,30 @@ body,
       }
     }
 
-    &__decrement-btn:hover {
+    &__decrement-btn:hover,
+    &__increment-btn:hover {
       #Vector_2 {
         fill: $color-red;
       }
+
+      #icon-bg {
+        fill: $color-white;
+      }
     }
+  }
+
+  // **************** ITEM ****************
+  .item {
+    &__remove-btn:hover {
+      .item__remove-icon path {
+        fill: $color-rose-900;
+      }
+    }
+  }
+
+  // ************** OrderBtn **************
+  .btn-order:hover {
+    background: $color-brown-red;
   }
 }
 

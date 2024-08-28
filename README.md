@@ -8,4 +8,5 @@ Users should be able to:
 • See an order confirmation modal when they click "Confirm Order"  
 • Reset their selections when they click "Start New Order"  
 • View the optimal layout for the interface depending on their device's screen size  
-• See hover and focus states for all interactive elements on the page
+• See hover and focus states for all interactive elements on the page  
+• Reload the page without losing the contents of their cart

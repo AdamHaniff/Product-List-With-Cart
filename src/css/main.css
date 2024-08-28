@@ -176,6 +176,11 @@ body,
   font-weight: 600;
 }
 
+#Vector_2,
+#icon-bg {
+  transition: fill 0.5s;
+}
+
 .cart {
   display: flex;
   flex-direction: column;
@@ -293,9 +298,13 @@ body,
 .item__remove-btn {
   border: none;
   background: none;
+  cursor: pointer;
 }
 .item__remove-icon {
   display: block;
+}
+.item__remove-icon path {
+  transition: fill 0.5s;
 }
 
 .order {
@@ -322,8 +331,9 @@ body,
   font-family: inherit;
   font-size: 1.6rem;
   font-weight: 600;
-  transition: transform 0.1s ease-in-out;
   padding: 1.6rem;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out, background 0.5s;
 }
 .btn-order:active {
   transform: translateY(0.2rem);
@@ -470,8 +480,17 @@ body,
   .dessert__cart-btn:hover .dessert__cart-text {
     color: #c73b0f;
   }
-  .dessert__decrement-btn:hover #Vector_2 {
+  .dessert__decrement-btn:hover #Vector_2, .dessert__increment-btn:hover #Vector_2 {
     fill: #c73b0f;
+  }
+  .dessert__decrement-btn:hover #icon-bg, .dessert__increment-btn:hover #icon-bg {
+    fill: #fff;
+  }
+  .item__remove-btn:hover .item__remove-icon path {
+    fill: #260f08;
+  }
+  .btn-order:hover {
+    background: #952c0c;
   }
 }
 .dessert__img--added {
