@@ -123,6 +123,9 @@ body,
   cursor: pointer;
   transition: border-color 0.5s;
 }
+.dessert__cart-btn:focus-visible {
+  outline: 0.1rem solid #c73b0f;
+}
 .dessert__cart-icon {
   display: block;
 }
@@ -147,6 +150,10 @@ body,
   background: none;
   border: none;
   cursor: pointer;
+  border-radius: 50%;
+}
+.dessert__decrement-btn:focus-visible, .dessert__increment-btn:focus-visible {
+  outline-color: #260f08;
 }
 .dessert__decrement-icon, .dessert__increment-icon {
   display: block;
@@ -299,6 +306,10 @@ body,
   border: none;
   background: none;
   cursor: pointer;
+  border-radius: 50%;
+}
+.item__remove-btn:focus-visible {
+  outline-color: #c73b0f;
 }
 .item__remove-icon {
   display: block;
@@ -337,6 +348,9 @@ body,
 }
 .btn-order:active {
   transform: translateY(0.2rem);
+}
+.btn-order:focus-visible {
+  outline-color: #260f08;
 }
 
 .modal {

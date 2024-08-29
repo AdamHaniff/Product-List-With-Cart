@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import data from "./js/data";
+import { useLocalStorageState } from "./hooks/useLocalStorageState";
+import { useKey } from "./hooks/useKey";
 
 export default function App() {
   // STATE
-  const [cartItems, setCartItems] = useState(function () {
-    const storedValue = localStorage.getItem("cartItems");
-    return storedValue ? JSON.parse(storedValue) : [];
-  });
-
+  const [cartItems, setCartItems] = useLocalStorageState([], "cartItems");
   const [isModalDisplayed, setIsModalDisplayed] = useState(false);
 
   // HANDLER FUNCTIONS
@@ -32,14 +30,6 @@ export default function App() {
   const handleConfirmOrderClick = () => setIsModalDisplayed(true);
 
   const handleModalClose = () => setIsModalDisplayed(false);
-
-  // EFFECTS
-  useEffect(
-    function () {
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    },
-    [cartItems]
-  );
 
   return (
     <div className="app">
@@ -414,21 +404,8 @@ function Modal({ cartItems, onModalClose, setCartItems }) {
     return () => document.body.classList.remove("modal-open");
   }, []);
 
-  useEffect(
-    function () {
-      function handleEscapeKeyPress(e) {
-        if (e.key === "Escape" || e.key === "Esc") {
-          handleModalOverlayClose();
-        }
-      }
-
-      document.addEventListener("keydown", handleEscapeKeyPress);
-
-      return () =>
-        document.removeEventListener("keydown", handleEscapeKeyPress);
-    },
-    [handleModalOverlayClose]
-  );
+  // Close the modal and overlay when the 'Escape' key is pressed
+  useKey("Escape", handleModalOverlayClose);
 
   return (
     <>
