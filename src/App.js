@@ -276,10 +276,36 @@ function Items({ cartItems, onRemoveFromCart, isModal }) {
 }
 
 function Item({ dessert, onRemoveFromCart, isModal }) {
+  // STATE
+  const [modalItemName, setModalItemName] = useState(dessert.name);
+
+  // VARIABLES
   const itemTotalPrice = (dessert.price * dessert.quantity).toFixed(2);
   const { thumbnail } = dessert.image;
-  const formattedName =
-    dessert.name.length > 20 ? dessert.name.slice(0, 20) + "..." : dessert.name;
+
+  // EFFECTS
+  useEffect(
+    function () {
+      const mediaQuery = window.matchMedia("(min-width: 400px)");
+
+      // Function to handle media query change
+      function handleMediaChange(e) {
+        if (e.matches) {
+          setModalItemName(dessert.name);
+        } else {
+          setModalItemName(dessert.name.slice(0, 20) + "...");
+        }
+      }
+
+      // Check the initial state and add the listener
+      handleMediaChange(mediaQuery);
+      mediaQuery.addEventListener("change", handleMediaChange);
+
+      // Clean up the event listener
+      return () => mediaQuery.removeEventListener("change", handleMediaChange);
+    },
+    [dessert.name]
+  );
 
   return (
     <li className="item">
@@ -288,7 +314,7 @@ function Item({ dessert, onRemoveFromCart, isModal }) {
       )}
       <div className="item__details">
         <span className="item__name">
-          {isModal ? formattedName : dessert.name}
+          {isModal ? modalItemName : dessert.name}
         </span>
         <div className="item__pricing">
           <span className="item__quantity">{dessert.quantity}x</span>
