@@ -1,0 +1,64 @@
+// ********* DESIGN SYSTEM *********
+
+// ************ COLORS ************
+$color-red: #c73b0f;
+$color-rose-900: #260f08;
+$color-rose-500: #87635a;
+$color-rose-400: #ad8a85;
+$color-rose-300: #caafa7;
+$color-rose-100: #f5eeec;
+$color-rose-50: #fcf8f6;
+$color-green: #1ea575;
+$color-black: #000;
+$color-white: #fff;
+$color-overlay-bg: rgba(0, 0, 0, 0.5);
+$color-brown-red: #952c0c;
+
+// ********** FONT-FAMILY **********
+$font-red-hat-text: "Red Hat Text", sans-serif;
+
+// ********* FONT-WEIGHTS *********
+$fw-regular: 400;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+
+// ************* SPACING *************
+$spacing-1100: 8.8rem;
+$spacing-500: 4rem;
+$spacing-400: 3.2rem;
+$spacing-300: 2.4rem;
+$spacing-200: 1.6rem;
+$spacing-150: 1.2rem;
+$spacing-100: 0.8rem;
+$spacing-50: 0.4rem;
+
+// ******* RESPONSIVE VARIABLES *******
+$responsive-12px-14px: clamp(
+  1.2rem,
+  calc(1.2rem + (2 * ((100vw - 32rem) / 55))),
+  1.4rem
+);
+
+$responsive-14px-16px: clamp(
+  1.4rem,
+  calc(1.4rem + (2 * ((100vw - 32rem) / 55))),
+  1.6rem
+);
+
+$responsive-20px-24px: clamp(
+  2rem,
+  calc(2rem + (24 - 20) * ((100vw - 32rem) / (375 - 320))),
+  2.4rem
+);
+
+$responsive-46px-48px: clamp(
+  4.6rem,
+  calc(4.6rem + (48 - 46) * ((100vw - 32rem) / (375 - 320))),
+  4.8rem
+);
+
+$responsive-24px-40px: clamp(
+  2.4rem,
+  calc(2.4rem + (40 - 24) * ((100vw - 37.5rem) / (768 - 375))),
+  4rem
+);

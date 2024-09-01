@@ -1,0 +1,13 @@
+// ********** DYNAMIC STYLES **********
+
+// ************* DESSERT *************
+.dessert {
+  &__img--added {
+    border-color: $color-red;
+  }
+}
+
+// **************** MODAL ****************
+.modal-open {
+  overflow: hidden;
+}

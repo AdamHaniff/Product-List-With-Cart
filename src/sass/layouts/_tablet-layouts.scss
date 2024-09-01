@@ -1,0 +1,18 @@
+// ************ TABLET LAYOUT ************
+
+// ************ 768px LAYOUT ************
+@media only screen and (min-width: 48em) {
+  // ************* DESSERTS *************
+  .desserts {
+    &__container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  // ************** DESSERT **************
+  .dessert {
+    &__image-container {
+      max-width: 25.1rem;
+    }
+  }
+}

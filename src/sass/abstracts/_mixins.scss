@@ -1,0 +1,10 @@
+// ************** MIXINS **************
+@mixin dessert-btn-styles($bg-color) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 99.9rem;
+  padding: $spacing-150;
+  background: $bg-color;
+}

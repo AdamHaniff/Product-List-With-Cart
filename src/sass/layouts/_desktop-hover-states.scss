@@ -1,0 +1,40 @@
+// ******** DESKTOP HOVER STATES ********
+
+// ********** 992px MEDIA QUERY **********
+@media only screen and (min-width: 62em) {
+  // ************** DESSERT **************
+  .dessert {
+    &__cart-btn:hover {
+      border: 0.1rem solid $color-red;
+
+      & .dessert__cart-text {
+        color: $color-red;
+      }
+    }
+
+    &__decrement-btn:hover,
+    &__increment-btn:hover {
+      #Vector_2 {
+        fill: $color-red;
+      }
+
+      #icon-bg {
+        fill: $color-white;
+      }
+    }
+  }
+
+  // **************** ITEM ****************
+  .item {
+    &__remove-btn:hover {
+      .item__remove-icon path {
+        fill: $color-rose-900;
+      }
+    }
+  }
+
+  // ************** OrderBtn **************
+  .btn-order:hover {
+    background: $color-brown-red;
+  }
+}

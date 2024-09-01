@@ -1,0 +1,29 @@
+// *********** DESKTOP LAYOUT ***********
+
+// ************ 1440px LAYOUT ************
+@media only screen and (min-width: 90em) {
+  // *************** ROOT ***************
+  #root {
+    padding: $spacing-1100 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // **************** APP ****************
+  .app {
+    flex-direction: row;
+    align-items: start;
+    padding: initial;
+  }
+
+  // *************** CART ***************
+  .cart {
+    width: 38.4rem;
+  }
+
+  // *************** MODAL ***************
+  .modal {
+    width: 59.2rem;
+  }
+}
