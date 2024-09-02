@@ -6,6 +6,7 @@ export default function Cart({
   onRemoveFromCart,
   onConfirmOrderClick,
 }) {
+  // VARIABLES 
   const isCartEmpty = cartItems.length === 0;
   const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
